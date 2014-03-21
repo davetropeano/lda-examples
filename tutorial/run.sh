@@ -1,3 +1,3 @@
 #!/bin/sh
-export PYTHONPATH=.:../../lda-mongodbstorage:../../lda-serverlib
+export PYTHONPATH=.:../../lda-serverlib/mongodbstorage:../../lda-serverlib/logiclibrary
 python test_server.py
