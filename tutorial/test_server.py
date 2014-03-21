@@ -10,9 +10,9 @@ APP_NAME = 'tutorial'
 PORT = 3007
     
 os.environ['APP_NAME'] = APP_NAME
-os.environ['MONGODB_DB_HOST'] = 'localhost' # 'ec2-50-19-190-34.compute-1.amazonaws.com'
+os.environ['MONGODB_DB_HOST'] = 'localhost'
 os.environ['MONGODB_DB_PORT'] = '27017'
-os.environ['CONCIERGERIE_HOST'] = 'localhost:%s' % PORT # 'ec2-50-19-190-34.compute-1.amazonaws.com'
+os.environ['CHECK_ACCESS_RIGHTS'] = 'False'
  
 from logic_server import application
 from werkzeug.wsgi import SharedDataMiddleware

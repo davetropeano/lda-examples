@@ -43,7 +43,7 @@ server {
         sendfile off;
 
         # tutorial static files
-        location ~ ^/clientlib/ {
+        location ~ ^/(clientlib|tutorial)/ {
             proxy_pass http://$dev_host:$testserver_port;
             }
         
