@@ -1,0 +1,24 @@
+<div id="cart-header" class="nav navbar-nav dropdown">
+    <a class="navbar-brand pull-right dropdown-toggle" href='#' data-hover="dropdown"><b class="caret big-caret"></b></a>
+    <div class="dropdown-menu pull-right" style="min-width: 300px; padding: 5px 20px 10px 20px;">
+    	<div data-bind="if: lineitems().length == 0" class="small">
+            <p>
+                <strong>Your Shopping Cart is empty.</strong>
+                <br><br>
+                Give it purpose—fill it with vitamins, supplements, and more.<br><br>
+                If you already have an account, sign in.<br>
+            </p>
+        </div>
+        <div data-bind="if: lineitems().length > 0" class="small">
+            <ul class="nav" data-bind="foreach: lineitems">
+                <li class="dropdown">
+                    <span data-bind="text: name"></span><br>
+                    <span class="grey-text">Quantity: </span><span class="grey-text" data-bind="text: sus_quantity"></span>
+                </li>
+            </ul>
+            <br>
+            <a type="button" href="/cart" class="btn btn-warning black-text"><strong>View Cart (<span data-bind="text: lineitems().length"></span> items)</strong></a>
+        </div>
+    </div>
+    <a class="navbar-brand pull-right" href='/cart'><span class="glyphicon glyphicon-shopping-cart" style=""></span><span data-bind="dollars: total"></span></a>
+</div>

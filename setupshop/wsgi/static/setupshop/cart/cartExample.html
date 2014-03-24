@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="ISO-8859-1">
+
+	<title>Cart</title>
+
+	<script src="http://codeorigin.jquery.com/jquery-2.0.3.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/knockout/2.3.0/knockout-min.js"></script>
+	<script src="/setupshop/shop/vendor/knockout-postbox.min.js"></script>
+	<script src="/setupshop/shop/vendor/knockout-es5.min.js"></script>
+	<script src="/sitedesign/utils.js"></script>
+
+	<script src="cart.js"></script>
+	<script src="cartExample.js"></script>
+</head>
+<body>
+	<h1>
+		Cart
+	</h1>
+	<span data-bind="text: data()._subject">url</span>
+
+	<div data-bind="visible: data().sus_items().length == 0" class="small">
+	    <p>
+	        <strong>Your Shopping Cart is empty.</strong>
+	    </p>
+	</div>
+
+	<table data-bind="visible: data().sus_items().length != 0">
+		<thead>
+			<tr>
+				<td>Product</td>
+				<td>Variant</td>
+				<td>Qty</td>
+			</tr>
+		</thead>
+		<tbody data-bind="foreach: data().sus_items">
+			<tr>
+				<td><span data-bind="text: sus_productUrl"></span></td>
+				<td><span data-bind="text: sus_variant"></span></td>
+				<td><input data-bind="value: sus_quantity" /></td>
+				<td><input type="button" data-bind="click: $parent.removeItem" value="remove" /><td>
+			</tr>
+
+		</tbody>
+	</table>
+
+	<input type="button" data-bind="click: addDummyItem" value="Add Item" />
+	<input type="button" data-bind="click: save" value="Save" />
+	<input type="button" data-bind="click: deleteCart" value="Delete Cart" />
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+<div data-bind="if: visible">
+    <h1>Products</h1>
+    <ul class="media-list" data-bind="foreach: products">
+        <li class="media">
+            <a class="pull-left" data-bind="attr: {href: _subject}">
+                <img class="media-object" data-bind="attr: {src: sus_featured_image.sus_image_source}" alt="">
+            </a>
+            <div class="media-body">
+                <h4 class="media-heading" data-bind="text: dc_title"></h4>
+                <p class="large" data-bind="text: dc_description"></p>
+                <p>Price: <span data-bind="dollars: sus_variants[0].sus_price"></span></p>
+                <a type="button" data-bind="attr: {href: _subject}" class="btn btn-success">Details</a>
+            </div>
+        </li>
+    </ul>
+</div>

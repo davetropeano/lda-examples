@@ -1,0 +1,60 @@
+setupshop is an example application designed to illustrate the use of the "Linked Data For Applications" frameworks.
+
+SetupShop can be run in different configurations, but here we document what you need to do to run it in a local development configuration.
+
+Setupshop is delivered at a github repository. Setupshop depends on two libraires that are delivered as git submodules, also at github. Setupshop also depends on a peer application called siteserver, also at github, that in turn depends on the same libraries. This file will explain how to download and install all this software.
+
+The development environment uses vagrant and virtualbox. There is another github repository - buildanddeploy - that contains files that help you set up and run this environment. 
+
+Steps
+=====
+
+1) Make a directory in which you want to keep all this
+2) CD into the directory you just made
+3) git clone https://github.com/mpnally/setupshop.git
+   This will create the setupshop sub-directory. You will need a github id and password to make this work, and someone will have had to add you as a collaborator at github
+4) CD setupshop
+5) git submodule init
+6) git submodule update
+   This step should populate the directories libs/LogicLibrary and libs/MongoDBStorage. If those directories are still empty, you have a problem
+7) python setup.py install
+   This step will download the python libraries you need
+8) CD ..
+   This step should bring you back to your outer directory that you created in step 1
+9) git clone https://github.com/mpnally/SiteServer.git
+   This will create the siteserver sub-directory
+10) CD siteserver
+11) git submodule init
+12) git submodule update
+    This step should populate the directories libs/LogicLibrary and libs/MongoDBStorage. If those directories are empty, you have a problem
+13) python setup.py install
+   This step will download the python libraries you need
+14) CD ..
+   This step should bring you back to your outer directory that you created in step 1
+15) git clone https://github.com/mpnally/buildanddeploy.git
+   This step will create the buildandeploy directory
+16) CD buildandeploy
+   If you do not already have vagrant and virtualbox installed, look at the README file in this directory and follow the instructions there
+17) cd localhost
+18) vagrant up
+    This step will initialize a linux virtual machine on your development machine running MongoDB and Nginx. 
+19) vagrant ssh
+    This step is not really necessary, but you might want to do it to make sure your VM is running properly
+20) Exit your ssh session, or else create another shell window in which to continue
+21) CD into the directory you created in step 1
+22) CD siteserver
+23) run.bat or run.sh will run a python server on port 3005. If you don't see a message saying that siteserver intialized on port 3005, then something went wrong.
+24) Create a new shell window
+25) CD into the directory you created in step 1
+26) CD setupshop
+27) run.bat or run.sh will run a python server on port 3006. If you don't see a message saying that setupshop intialized on port 3006, then something went wrong.
+28) open your hosts file in a text editor. (On windows this is tedious. You have to run the text editor as administrator. hosts is in /windows/systrem32/drivers/etc)
+29) add the following lines to your hosts file
+    127.0.0.1       cloudsupplements.localhost
+    127.0.0.1       testsite.localhost    
+30) Open a browser on http://localhost:3001
+    Witness that a page comes up
+31) Open a browser on http://cloudsupplements.localhost:3001
+    Witness that a page comes up 
+
+Whew! Maybe we should automate more of this.

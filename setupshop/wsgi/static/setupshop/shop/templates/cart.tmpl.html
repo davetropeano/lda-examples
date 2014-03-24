@@ -1,0 +1,32 @@
+<div data-bind="if: visible">
+    <h1>Shopping Cart</h1>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Qty</th>
+                    <th>Unit Price</th>
+                    <th>Line Item Price</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: lineitems">
+                    <tr>
+                        <td>
+                        	<a data-bind="text: name, attr: { href: sus_productUrl, title: name}"></a>
+                        </td>
+                        <td>
+                            <input type="text" size="4" data-bind="value: view_quantity, valueUpdate: 'afterkeydown'">
+                            <button type="button" class="btn btn-sm btn-warning" data-bind="visible: quantityChanged, click: quantityUpdate">Update</button>                            
+                        </td>
+                        <td data-bind="dollars: sus_unitprice"></td>
+                        <td data-bind="dollars: lineitem_price"></td>
+                        <td><span class="glyphicon glyphicon-trash" title="delete line item" data-bind="click: $parent.deleteLineitem"></span></td>
+
+                    </tr>
+            </tbody>
+        </table>
+    </div>
+    <button type="button" class="btn btn-lg btn-warning">Checkout</button>    
+</div>

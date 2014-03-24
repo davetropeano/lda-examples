@@ -1,0 +1,35 @@
+<div data-bind="if: visible">
+    <div data-bind="with: product">
+        <h1 data-bind="text: dc_title"></h1>
+        <div class="media">
+            <a class="pull-left" data-bind="attr: {href: _subject}">
+                <img class="media-object" data-bind="attr: {src: sus_featured_image.sus_image_source}" alt="">
+            </a>
+            <div class="media-body">
+                <p class="lead" data-bind="text: dc_description"></p>
+                <div data-bind="if: $parent.selectedVariant">
+                    <p class="list-price">List Price: <span class="strikethrough" data-bind="dollars: $parent.selectedVariant.sus_compare_at_price"></span></p>
+                    <p class="your-price">Price: <span class="highlighted-price"  data-bind="dollars: $parent.selectedVariant.sus_price"></span></p>
+                    <!-- ko foreach: sus_options -->
+                    <p>
+                        <strong><span data-bind="text: sus_option_name + ': '"></span></strong>
+                        <select class="form-control product-select" data-bind="options: sus_option_values, optionsText: $data, value: selectedOption"></select>
+                    </p>
+                    <!-- /ko -->
+                    <button type="button" class="btn btn-lg btn-warning" data-bind="click: $parent.addToCart">Add To Cart</button>
+                </div>
+
+                <div data-bind="ifnot: $parent.selectedVariant">
+                    <!-- ko foreach: sus_options -->
+                    <p>
+                        <strong><span data-bind="text: sus_option_name + ': '"></span></strong>
+                        <select class="form-control product-select" data-bind="options: sus_option_values, optionsText: $data, value: selectedOption"></select>
+                    </p>
+                    <!-- /ko -->
+                    <p class="text-danger"><strong>Drats! We don't have <span data-bind="text: dc_title"></span> in these options. Go back.</strong></p>
+                    <button type="button" disabled="disabled" class="btn btn-lg btn-warning" data-bind="click: $parent.addToCart">Add To Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

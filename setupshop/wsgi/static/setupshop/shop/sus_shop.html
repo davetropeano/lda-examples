@@ -1,0 +1,26 @@
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div data-bind="module: {name: 'store', template: 'store-header'} ">
+        </div>
+
+        <div class="navbar-header pull-right" data-bind="module: {name: 'cart', template: 'cart-header', afterRender: function() {$('.dropdown-toggle').dropdownHover()} }">
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div id="homepage-page" class="" data-bind="module: 'store' ">
+    </div>
+
+    <div id="category-page" class="" data-bind="module: 'category' ">
+    </div>
+
+    <div id="product-page" class="" data-bind="module: 'product' ">
+    </div>
+
+    <div id="cart-page" class="" data-bind="module: 'cart' ">
+    </div>
+
+</div><!-- /.container -->
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.9/require.min.js" data-main="/setupshop/shop/main"></script>

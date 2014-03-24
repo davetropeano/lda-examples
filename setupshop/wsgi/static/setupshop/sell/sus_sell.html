@@ -1,0 +1,978 @@
+<style scoped>
+    @import url("/setupshop/sell/css/bootstrap.min.css");
+    @import url("/setupshop/sell/css/bootstrap-select.css");
+    @import url("/setupshop/sell/css/sb-admin.css");
+    @import url("/setupshop/sell/css/sus_sell.css");
+</style>
+
+<!--
+    there is a problem loading font-awesome using the scoped @import. For now we load via JS
+-->
+<script type="text/javascript">
+    var cssId = 'fa';
+
+    if (!document.getElementById(cssId)) {
+        var head  = document.getElementsByTagName('head')[0];
+        var link  = document.createElement('link');
+        link.id   = cssId;
+        link.rel  = 'stylesheet';
+        link.type = 'text/css';
+        link.href = '/setupshop/sell/font-awesome/css/font-awesome.min.css';
+        head.appendChild(link);
+    }
+</script>
+
+<div id="wrapper">
+    <div id="backoffice-nav">
+        <nav class="navbar navbar-default navbar-static-top" style="margin-bottom: 0;" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href='/' data-bind="text: store.title() + ' Backoffice' "></a>
+                <a class="navbar-brand" data-bind="attr: {href: store.uri()}"><small><i class="fa fa-fw fa-external-link"></i> View your website</small></a>
+            </div>
+
+            <!-- top nav personalization -->
+            <ul class="nav navbar-top-links navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-user"></i> <span data-bind="text: displayName()"></span> <b class="caret"></b></a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-fw fa-user"></i> Profile</a></li>
+                        <li><a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox <span class="badge">7</span></a></li>
+                        <li><a href='#'><i class="fa fa-fw fa-bell"></i> Alerts <span class="badge">3</span></a></li>
+                        <li><a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li class="sidebar-search">
+                        <div class="input-group custom-search-form">
+                            <input type="text" class="form-control" placeholder="Search...">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                        <!-- /input-group -->
+                    </li>
+                    <li class="side-nav-header">your store</li>
+                    <li><a href="#dashboard" data-bind="click: showView('dashboard')"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a></li>
+                    <li><a href="#orders" data-bind="click: showView('orders')"><i class="fa fa-fw fa-inbox"></i> Orders</a></li>
+                    <li><a href="#customers"><i class="fa fa-fw fa-users"></i> Customers</a></li>
+                    <li><a href="javascript: void(0)" data-bind="click: showView('productsapp')"><i class="fa fa-fw fa-tags"></i> Products</a></li>
+                    <li><a href="#collections"><i class="fa fa-fw fa-folder-open"></i> Collections</a></li>
+                    <li><a href="#discounts"><i class="fa fa-fw fa-bullhorn"></i> Discounts</a></li>
+                    <li><a href="#giftcards"><i class="fa fa-fw fa-gift"></i> Gift Cards</a></li>
+                    <li><a href="#reports"><i class="fa fa-fw fa-bar-chart-o"></i> Reports</a></li>
+
+                    <li class="side-nav-header">your website</li>
+                    <li><a href="javascript: void(0)" data-bind="click: showView('blogapp')"><i class="fa fa-fw fa-edit"></i> Blog Posts</a></li>
+                    <li><a href="#pages"><i class="fa fa-fw fa-files-o"></i> Pages</a></li>
+                    <li><a href="#navigation"><i class="fa fa-fw fa-link"></i> Navigation</a></li>
+                    <li><a href="#themes"><i class="fa fa-fw fa-picture-o"></i> Themes</a></li>
+
+                    <li class="side-nav-header">configuration</li>
+                    <li><a href="#apps"><i class="fa fa-fw fa-cogs"></i> Apps</a></li>
+                    <li><a href="#settings"><i class="fa fa-fw fa-gear"></i> Settings</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <div id="page-wrapper">
+        <!-- dashboard page is all fake data showing the capabilities of the theme. The spacing is messedu up but can be ignored -->
+        <div id='page-dashboard' class="ko-hidden" data-bind="if: visible">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>Dashboard <small>Statistics Overview</small></h1>
+                    <ol class="breadcrumb">
+                        <li class="active"><i class="fa fa-fw fa-dashboard"></i> Dashboard</li>
+                    </ol>
+                    <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        Welcome to SB Admin by <a class="alert-link" href="http://startbootstrap.com">Start Bootstrap</a>! Feel free to use this template for your admin needs! We are using a few different plugins to handle the dynamic tables and charts, so make sure you check out the necessary documentation links provided.
+                    </div>
+                </div>
+            </div><!-- /.row -->
+
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <i class="fa fa-fw fa-comments fa-5x"></i>
+                                </div>
+                                <div class="col-xs-6 text-right">
+                                    <p class="announcement-heading">456</p>
+                                    <p class="announcement-text">New Mentions!</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <a href="#">
+                            <div class="panel-footer announcement-bottom">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        View Mentions
+                                    </div>
+                                    <div class="col-xs-6 text-right">
+                                        <i class="fa fa-fw fa-arrow-circle-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <i class="fa fa-fw fa-check fa-5x"></i>
+                                </div>
+                                <div class="col-xs-6 text-right">
+                                    <p class="announcement-heading">12</p>
+                                    <p class="announcement-text">To-Do Items</p>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer announcement-bottom">
+                                <div class="row">
+                                    <div class="col-xs-6">Complete Tasks</div>
+                                    <div class="col-xs-6 text-right">
+                                        <i class="fa fa-fw fa-arrow-circle-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+              <div class="col-lg-3">
+                <div class="panel panel-danger">
+                  <div class="panel-heading">
+                    <div class="row">
+                      <div class="col-xs-6">
+                        <i class="fa fa-fw fa-tasks fa-5x"></i>
+                      </div>
+                      <div class="col-xs-6 text-right">
+                        <p class="announcement-heading">18</p>
+                        <p class="announcement-text">Crawl Errors</p>
+                      </div>
+                    </div>
+                  </div>
+                  <a href="#">
+                    <div class="panel-footer announcement-bottom">
+                      <div class="row">
+                        <div class="col-xs-6">
+                          Fix Issues
+                        </div>
+                        <div class="col-xs-6 text-right">
+                          <i class="fa fa-fw fa-arrow-circle-right"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="panel panel-success">
+                  <div class="panel-heading">
+                    <div class="row">
+                      <div class="col-xs-6">
+                        <i class="fa fa-fw fa-comments fa-5x"></i>
+                      </div>
+                      <div class="col-xs-6 text-right">
+                        <p class="announcement-heading">56</p>
+                        <p class="announcement-text">New Orders!</p>
+                      </div>
+                    </div>
+                  </div>
+                  <a href="#">
+                    <div class="panel-footer announcement-bottom">
+                      <div class="row">
+                        <div class="col-xs-6">
+                          Complete Orders
+                        </div>
+                        <div class="col-xs-6 text-right">
+                          <i class="fa fa-fw fa-arrow-circle-right"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div><!-- /.row -->
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-fw fa-bar-chart-o"></i> Traffic Statistics: October 1, 2013 - October 31, 2013</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div id="morris-area-chart" data-bind="morris: {type: 'Area', data: areadata, xkey: 'period', ykeys: ['iphone', 'ipad', 'itouch'], labels: ['iPhone', 'iPad', 'iPod Touch'], pointSize: 2, hideHover: 'auto', resize: true}"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-fw fa-bar-chart-o"></i> Traffic Sources: October 1, 2013 - October 31, 2013</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div id="morris-donut-chart" data-bind="morris: {type: 'Donut', data: donutdata}"></div>
+                            <div class="text-right">
+                                <a href="#">View All Activity <i class="fa fa-fw fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.row -->
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="panel panel-primary">
+                      <div class="panel-heading">
+                        <h3 class="panel-title"><i class="fa fa-fw fa-money"></i> Recent Transactions</h3>
+                      </div>
+                      <div class="panel-body">
+                        <div class="table-responsive">
+                          <table class="table table-bordered table-hover table-striped datatable">
+                            <thead>
+                              <tr>
+                                <th>Order #</th>
+                                <th>Order Date</th>
+                                <th>Order Time</th>
+                                <th>Amount (USD)</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>3326</td>
+                                <td>10/21/2013</td>
+                                <td>3:29 PM</td>
+                                <td>$321.33</td>
+                              </tr>
+                              <tr>
+                                <td>3325</td>
+                                <td>10/21/2013</td>
+                                <td>3:20 PM</td>
+                                <td>$234.34</td>
+                              </tr>
+                              <tr>
+                                <td>3324</td>
+                                <td>10/21/2013</td>
+                                <td>3:03 PM</td>
+                                <td>$724.17</td>
+                              </tr>
+                              <tr>
+                                <td>3323</td>
+                                <td>10/21/2013</td>
+                                <td>3:00 PM</td>
+                                <td>$23.71</td>
+                              </tr>
+                              <tr>
+                                <td>3322</td>
+                                <td>10/21/2013</td>
+                                <td>2:49 PM</td>
+                                <td>$8345.23</td>
+                              </tr>
+                              <tr>
+                                <td>3321</td>
+                                <td>10/21/2013</td>
+                                <td>2:23 PM</td>
+                                <td>$245.12</td>
+                              </tr>
+                              <tr>
+                                <td>3320</td>
+                                <td>10/21/2013</td>
+                                <td>2:15 PM</td>
+                                <td>$5663.54</td>
+                              </tr>
+                              <tr>
+                                <td>3319</td>
+                                <td>10/21/2013</td>
+                                <td>2:13 PM</td>
+                                <td>$943.45</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="text-right">
+                          <a href="#">View All Transactions <i class="fa fa-fw fa-arrow-circle-right"></i></a>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-fw fa-clock-o"></i> Recent Activity</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item">
+                                    <span class="badge">just now</span>
+                                    <i class="fa fa-fw fa-calendar"></i> Calendar updated
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <span class="badge">4 minutes ago</span>
+                                    <i class="fa fa-fw fa-comment"></i> Commented on a post
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <span class="badge">23 minutes ago</span>
+                                    <i class="fa fa-fw fa-truck"></i> Order 392 shipped
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <span class="badge">46 minutes ago</span>
+                                    <i class="fa fa-fw fa-money"></i> Invoice 653 has been paid
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <span class="badge">1 hour ago</span>
+                                    <i class="fa fa-fw fa-user"></i> A new user has been added
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <span class="badge">2 hours ago</span>
+                                    <i class="fa fa-fw fa-check"></i> Completed task: "pick up dry cleaning"
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <span class="badge">yesterday</span>
+                                    <i class="fa fa-fw fa-globe"></i> Saved the world
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <span class="badge">two days ago</span>
+                                    <i class="fa fa-fw fa-check"></i> Completed task: "fix error on sales page"
+                                </a>
+                            </div>
+                            <div class="text-right">
+                                <a href="#">View All Activity <i class="fa fa-fw fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.row -->
+        </div>
+
+        <div id='page-orders' class="ko-hidden" data-bind="if: visible">
+            <div class="row">
+                <h3>
+                    <i class="fa fa-fw fa-inbox"></i> Orders
+
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-default" data-bind="">Abandoned checkouts</button>
+                    </div>
+                </h3>
+                <hr>
+                <p class="lead text-center">Look out for your first order here!</p>
+            </div>
+        </div>
+
+        <div id='page-productcatalog' class="ko-hidden" data-bind="if: visible">
+            <div class="row">
+                <div id='page-productslist' style="display:block" data-bind="if: currentView() == 'productslist' ">
+                    <h3>
+                        <i class="fa fa-fw fa-tags"></i> Product Catalog
+                        <div class="pull-right">
+                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-importproducts">Import products</button>
+                            <button type="button" class="btn btn-success" data-bind="">Add a product</button>
+                        </div>
+                    </h3>
+                    <hr>
+                    <div class="table-responsive">
+                      <table class="table product-table datatable">
+                        <thead>
+                          <tr>
+                            <th><input type="checkbox"></th>
+                            <th></th>
+                            <th>Product</th>
+                            <th>Inventory</th>
+                            <th>Type</th>
+                            <th>Vendor</th>
+                          </tr>
+                        </thead>
+                        <tbody data-bind="foreach: products">
+                          <tr>
+                            <td><input type="checkbox"></td>
+                            <td><img class="block img-list" data-bind="attr: {src: sus_featured_image.sus_image_source}" alt=""></td>
+                            <td><a class="no-href underlined" data-bind="text: dc_title, click: $root.editProduct"></a></td>
+                            <td data-bind="text: $root.inventoryText($data.sus_variants)"></td>
+                            <td data-bind="text: sus_category[0].dc_title"></td>
+                            <td data-bind="text: sus_vendor"></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                </div>
+
+                <div id='page-editproduct' class="ko-hidden" data-bind="if: currentView() == 'editproduct' ">
+                    <h3 data-bind="with: currentProduct">
+                        <i class="fa fa-fw fa-edit"></i> Edit Product / <span data-bind="text: dc_title"></span>
+                        <div class="pull-right">
+                            <button type="button" class="btn btn-default" data-bind="click: void(0)">Duplicate</button>
+                            <button type="button" class="btn btn-success" data-bind="click: void(0)">Save</button>
+                        </div>
+                    </h3>
+                    <hr>
+
+                    <form role="form" data-bind="with: currentProduct">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <p class="lead">Product Details</label>
+                                <p class="help-block">Write a name and description, and provide a type and vendor to categorize this product.</p>
+                                <a href='#'>View in your store <i class="fa fa-external-link"></i></a>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="form-group">
+                                    <label for="page-editproduct-title">Title</label>
+                                    <input type="text" class="form-control input-lg" id="page-editproduct-title" placeholder="Enter the name of your product" data-bind="value: dc_title, valueUpdate: 'afterkeydown' ">
+                                </div>
+
+                                <div class="form-group">
+                                    <textarea id="page-editproduct-description" class="tinymce" name="description" data-bind="wysiwyg: dc_description, wysiwygConfig: window.tinymceConfig"></textarea>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="page-editproduct-type">Type <span class="label-hint">e.g. Bicycles, T-shirts, etc.</span></label>
+                                            <select id="page-editproduct-type" class="selectpicker">
+                                                <option SELECTED>Unknown</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="page-editproduct-vendor">Vendor <span class="label-hint">e.g. Apple, Shopify</span></label>
+                                            <input id="page-editproduct-vendor" type="text" class="form-control input-sm" id="page-editproduct-vendor" placeholder="Enter the vendor of your product" data-bind="value: sus_vendor">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <p class="lead">Inventory &amp; variants</p>
+                                <p class="help-block">Configure the options for selling this product. You can also <a href='#'>reorder variants</a> and <a href='#'>edit options</a>.</p>
+                                <p><button class="btn btn-default">Add a variant</button></p>
+                            </div>
+                            <div class="col-md-9">
+                                <label for="page-post-tags">Tags</label>
+                                <input type="text" class="form-control" id="page-post-tags" placeholder="Enter any number of tags separated by a comma" data-bind="">
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <p class="lead">Images</p>
+                                <p class="help-block">Upload and edit images of this product. You can also <a href='#'>add images from the web</a>. Drag to reorder images.</p>
+                                <p><button class="btn btn-default">Choose images</button></p>
+                            </div>
+                            <div class="col-md-9">
+                                <p>You have added this product to these collections:</p>
+                                <!-- ko foreach: sus_category -->
+                                <span class="label label-info label-large" data-bind="text: dc_title"></span>
+                                <!-- /ko -->
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <p class="lead">Collections</p>
+                                <p class="help-block">Collections can be used to group products together.</p>
+                                <p><button class="btn btn-default">Add to collections</button></p>
+                            </div>
+                            <div class="col-md-9">
+                                <p>Visible (as of DATE)</p>
+                                <p>Hidden</p>
+                                <br>
+                                <p>Set a specific publish date...</p>
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class="row">
+                          <div class="col-md-3">
+                              <p class="lead">Tags</p>
+                              <p class="help-block">Tags can be used to categorize products by properties like color, size, and material.</p>
+                          </div>
+                          <div class="col-md-9">
+                              <p>Visible (as of DATE)</p>
+                              <p>Hidden</p>
+                              <br>
+                              <p>Set a specific publish date...</p>
+                          </div>
+                        </div>
+                        <hr>
+
+                        <div class="row">
+                          <div class="col-md-3">
+                              <p class="lead">Search Engines</p>
+                              <p class="help-block">Set up the page title, meta description and handle. These help define how this product shows up on search engines.</p>
+                          </div>
+                          <div class="col-md-9">
+                              <p>Visible (as of DATE)</p>
+                              <p>Hidden</p>
+                              <br>
+                              <p>Set a specific publish date...</p>
+                          </div>
+                        </div>
+                        <hr>
+
+                        <div class="row">
+                          <div class="col-md-3">
+                              <p class="lead">Visibility</p>
+                              <p class="help-block">Control if this product can be viewed on your storefront.</p>
+                          </div>
+                          <div class="col-md-9">
+                              <p>Visible (as of DATE)</p>
+                              <p>Hidden</p>
+                              <br>
+                              <p>Set a specific publish date...</p>
+                          </div>
+                        </div>
+                        <hr>
+                    </form>
+
+                    <h3>
+                        <div style="display: inline;">
+                            <button type="button" class="btn btn-warning" data-bind="click: void(0)">Delete this product</button>
+                        </div>
+                        <div class="pull-right">
+                            <button type="button" class="btn btn-success" data-bind="click: void(0)">Save</button>
+                        </div>
+                    </h3>
+                </div>
+
+                <div id='modal-importproducts' class="modal fade" role="dialog" tabindex="-1" aria-labelledby="label-importproducts" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h3 class="modal-title" id="label-importproducts">
+                                    <i class="fa fa-fw fa-cloud-upload"></i> Import Products By CSV
+                                </h3>
+
+                                <p class="bg bg-info">Your last product import finished on <strong>January 8, 2014 at 2:32pm</strong>. 38 products were imported, 0 products failed to import, and 0 products were skipped.</p>
+                            </div>
+                            <form role="form" method="post" enctype="multipart/form-data">
+                            <div class="modal-body">
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <span class="btn btn-primary btn-file">
+                                            <i class="fa fa-folder-open"></i><input type="file" name="file_to_import" multiple>
+                                        </span>
+                                    </span>
+                                    <input type="text" class="form-control" placeholder="CSV file to import..." readonly>
+                                </div>
+                                <p style="padding-top: 10px;">Download a <a href="https://cdn.shopify.com/s/assets/product_template-bc38c7bb95ff21a6045e43e69854d686.csv">sample CSV template</a> to see an example of the format required.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <span class="fa-stack pull-left">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-flag fa-inverse fa-stack-1x"></i>
+                                </span>
+                                <span class="pull-left underline" style="padding-top: 2px; padding-left: 5px;">Need help importing products?</span>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Upload file</button>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="page-blogapp" class="ko-hidden" data-bind="if: visible">
+            <div id='page-blogposts' class="ko-hidden" data-bind="if: currentView() == 'posts' ">
+                <h3>
+                  <i class="fa fa-fw fa-edit"></i> Blog Posts
+
+                  <div class="pull-right">
+                      <button type="button" class="btn btn-default" data-bind="click: gotoBlogs">Manage blogs</button>
+                      <button type="button" class="btn btn-default" data-bind="click: gotoComments">Manage comments</button>
+                      <button type="button" class="btn btn-success" data-bind="click: gotoAddPost">Add blog post</button>
+                  </div>
+                </h3>
+                <hr>
+
+                <div class="input-group">
+                  <div class="input-group-btn">
+                      <button type="button" class="btn btn-grey dropdown-toggle" data-toggle="dropdown">Filter blog post <span class="caret"></span></button>
+                      <div class="dropdown-menu" style="min-width: 300px; padding: 5px 20px 10px 20px; margin-left: 20px;">
+                          <p>Show all blog posts where:</p>
+                          <p>INSERT query section here</p>
+                      </div>
+                  </div>
+                  <input type="text" class="form-control" placeholder="Start typing a blog post's name...">
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox"></th>
+                                <th>Title</th>
+                                <th>Blog</th>
+                                <th>Tags</th>
+                                <th>Author</th>
+                                <th>Date</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="foreach: posts">
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td><a class="underlined no-href" data-bind="text: title, click: $parent.gotoPost"></a></td>
+                                <td data-bind="text: blog"></td>
+                                <td data-bind="foreach: tags">
+                                  <span class="tag" data-bind="text: $data"></span>
+                                </td>
+                                <td data-bind="text: author"></td>
+                                <td data-bind="text: date"></td>
+                                <td>
+                                  <i class="no-href fa fa-lg fa-edit" data-bind="click: $parent.gotoPost"></i>
+                                  <i class="no-href fa fa-lg fa-copy"></i>
+                                  <i class="no-href fa fa-lg fa-trash-o" data-bind="click: $parent.deletePost"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id='page-post' class="ko-hidden" data-bind="if: currentView() == 'post' ">
+                <h3>
+                    <i class="fa fa-fw fa-edit"></i> <a class="no-href" data-bind="click: gotoPosts">Blog Posts</a> / <span data-bind="text: currentPost().title"></span>
+
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-default" data-bind="click: gotoPosts">Cancel</button>
+                        <button type="button" class="btn btn-default" data-bind="">Preview blog post</button>
+                        <button type="button" class="btn btn-success" data-bind="click: savePost">Save</button>
+                    </div>
+                </h3>
+                <hr>
+
+                <form role="form" data-bind="with: currentPost">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p class="lead">Write your blog post</label>
+                            <p class="help-block">Give your blog post a title and add your content.</p>
+                            <a href='#'>View in your store <i class="fa fa-external-link"></i></a>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <label for="page-post-title">Title</label>
+                                <input type="text" class="form-control" id="page-post-title" placeholder="e.g. Blog about your latest products or deals" data-bind="value: title, valueUpdate: 'afterkeydown' ">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="page-post-content">Content</label>
+                                <div class="input-group" id="page-post-content">
+                                    <textarea name="content" width="100%" rows="25" cols="100" data-bind="value: body"></textarea>
+                                </div>
+                                <p>Add an excerpt...</p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="page-post-author">Author</label>
+                                <div class="input-group" id="page-post-author">
+                                    <select>
+                                        <option SELECTED>Annika Dexter</option>
+                                    </select>
+                                </div>
+
+                                <label for="page-post-post">Blog</label>
+                                <div class="input-group" id="page-post-blog">
+                                    <select data-bind="options: $parent.blogs, optionsText: 'title' "></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p class="lead">Tags</p>
+                            <p class="help-block">Tags can be used to categorize your blog posts.</p>
+                        </div>
+                        <div class="col-md-9">
+                            <label for="page-post-tags">Tags</label>
+                            <input type="text" class="form-control" id="page-post-tags" placeholder="Enter any number of tags separated by a comma" data-bind="value: tags">
+                        </div>
+                    </div>
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p class="lead">Search Engines</p>
+                            <p class="help-block">Set up the page title, meta description and handle. These help define how this blog shows up on search engines.</p>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="form-group" data-bind="css: {'has-error': pagetitleCount() > 70}">
+                                <label for="page-post-seo-pagetitle">Page title </label>
+                                <div style="display: inline" data-bind="if: pagetitleCount() <= 70">
+                                    <span class="text-muted note" data-bind="text: pagetitleCount"></span><span class="text-muted"> of 70 characters used</span>
+                                </div>
+                                <div style="display: inline" data-bind="if: pagetitleCount() > 70">
+                                    <span class="label label-danger">WARNING: Too many characters. Remove some.</span>
+                                </div>
+
+                                <input type="text" class="form-control" id="page-post-seo-pagetitle" placeholder="" data-bind="value: pageTitle, valueUpdate: 'afterkeydown' ">
+                            </div>
+
+                            <div class="form-group" data-bind="css: {'has-error': metadescriptionCount() > 160}">
+                                <label for="page-post-seo-meta-description">Meta description </label>
+                                <div style="display: inline" data-bind="if: metadescriptionCount() <= 160">
+                                    <span class="text-muted note" data-bind="text: metadescriptionCount"></span><span class="text-muted"> of 160 characters used</span>
+                                </div>
+                                <div style="display: inline" data-bind="if: metadescriptionCount() > 160">
+                                    <span class="label label-danger">WARNING: Too many characters. Remove some.</span>
+                                </div>
+
+                                <input type="text" class="form-control" id="page-post-seo-meta-description" placeholder="" data-bind="value: metaDescription, valueUpdate: 'afterkeydown' ">
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p class="lead">Visibility</p>
+                            <p class="help-block">Control if this blog post can be viewed on your storefront.</p>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Visible (as of DATE)</p>
+                            <p>Hidden</p>
+                            <br>
+                            <p>Set a specific publish date...</p>
+                        </div>
+                    </div>
+                </form>
+
+                <h3>
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-default" data-bind="click: gotoPosts">Cancel</button>
+                        <button type="button" class="btn btn-success" data-bind="click: savePost">Save</button>
+                    </div>
+                </h3>
+            </div>
+
+            <div id='page-blogs' class="ko-hidden" data-bind="if: currentView() == 'blogs' ">
+                <h3>
+                    <i class="fa fa-fw fa-edit"></i> <a class="no-href" data-bind="click: gotoPosts">Blog Posts</a> / Manage Blogs
+
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-success" data-bind="click: gotoAddBlog ">Add a blog</button>
+                    </div>
+                </h3>
+                <hr>
+
+                <input type="text" class="form-control" placeholder="Start typing a blog's name...">
+
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox"></th>
+                                <th>Blog</th>
+                                <th>Tags</th>
+                                </tr>
+                            </thead>
+                        <tbody data-bind="foreach: blogs">
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td><a href='#' class="underlined" data-bind="text: title, click: $root.gotoBlog"></a></td>
+                                <td data-bind="foreach: tags">
+                                    <span class="tag" data-bind="text: $data"></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id='page-blog' class="ko-hidden" data-bind="if: currentView() == 'blog' ">
+                <h3>
+                  <i class="fa fa-fw fa-edit"></i> <a class="no-href" data-bind="click: gotoBlogs">Blogs</a> / <span data-bind="text: currentBlog().title"></span>
+
+                  <div class="pull-right">
+                    <button type="button" class="btn btn-success" data-bind="click: saveBlog">Save</button>
+                  </div>
+                </h3>
+                <hr>
+
+                <form role="form" data-bind="with: currentBlog">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p class="lead">Blog Details</label>
+                            <p class="help-block">Write a title for this blog.</p>
+                            <a href='#'>View in your store <i class="fa fa-external-link"></i></a>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <label for="page-blog-title">Title</label>
+                                <input type="text" class="form-control" id="page-blog-title" placeholder="Type in a title for your blog..." data-bind="value: title, valueUpdate: 'afterkeydown' ">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="page-blog-feedburner">Feedburner URL</p>
+                                <div class="input-group" id="page-blog-feedburner">
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-grey dropdown-toggle" data-toggle="dropdown">http://feedproxy.googe.com/ <span class="caret"></span></button>
+                                        <ul class="dropdown-menu">
+                                            <li>http://feedproxy.google.com/</li>
+                                            <li>http://feeds.feedburner.com</li>
+                                        </ul>
+                                    </div>
+                                    <input type="text" class="form-control" data-bind="value: feedburner">
+                                </div>
+                                <p><a href='#'>What is feedburner?</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p class="lead">Comments</p>
+                            <p class="help-block">Manage how comments are handled on this blog.</p>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="commentsOption" id="commentsOption1" value="option1" checked>
+                                    Comments are disabled.
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="commentsOption" id="commentsOption2" value="option2">
+                                    Comments are allowed, pending moderation.
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="commentsOption" id="commentsOption3" value="option3">
+                                    Comments are allowed, and are automatically published.
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p class="lead">Search Engines</p>
+                            <p class="help-block">Set up the page title, meta description and handle. These help define how this blog shows up on search engines.</p>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="form-group" data-bind="css: {'has-error': pagetitleCount() > 70}">
+                                <label for="page-blog-seo-pagetitle">Page title </label>
+                                <div style="display: inline" data-bind="if: pagetitleCount() <= 70">
+                                    <span class="text-muted note" data-bind="text: pagetitleCount"></span><span class="text-muted"> of 70 characters used</span>
+                                </div>
+                                <div style="display: inline" data-bind="if: pagetitleCount() > 70">
+                                    <span class="label label-danger">WARNING: Too many characters. Remove some.</span>
+                                </div>
+
+                                <input type="text" class="form-control" id="page-blog-seo-pagetitle" placeholder="" data-bind="value: pageTitle, valueUpdate: 'afterkeydown' ">
+                            </div>
+
+                            <div class="form-group" data-bind="css: {'has-error': metadescriptionCount() > 160}">
+                                <label for="page-blog-seo-meta-description">Meta description </label>
+                                <div style="display: inline" data-bind="if: metadescriptionCount() <= 160">
+                                    <span class="text-muted note" data-bind="text: metadescriptionCount"></span><span class="text-muted"> of 160 characters used</span>
+                                </div>
+                                <div style="display: inline" data-bind="if: metadescriptionCount() > 160">
+                                    <span class="label label-danger">WARNING: Too many characters. Remove some.</span>
+                                </div>
+
+                                <input type="text" class="form-control" id="page-blog-seo-meta-description" placeholder="" data-bind="value: metaDescription, valueUpdate: 'afterkeydown' ">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="page-bind-seo-handle">URL &amp; Handle <a href='#'><i class="fa fa-question-circle"></i></a></label>
+                                <div class="input-group" id="page-bind-seo-handle">
+                                    <span class="input-group-addon">http://cloudsupplements.localhost.com:3001/blogs/</span>
+                                    <input type="text" class="form-control" placeholder="handle" data-bind="value: handle">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </form>
+
+                <h3>
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-success" data-bind="click: saveBlog">Save</button>
+                    </div>
+                </h3>
+            </div>
+
+            <div id="page-comments" class="ko-hidden" data-bind="if: currentView() == 'comments' ">
+                <h3>
+                    <i class="fa fa-fw fa-edit"></i> <a class="no-href" data-bind="click: gotoPosts">Blog Posts</a> / Manage Comments
+                </h3>
+                <hr>
+
+                <p class="lead text-center">
+                    <i class="fa fa-fw fa-comments fa-5x" style="color: #eee; padding-bottom: 30px;"></i><br>
+                    You don't have have any comments yet<br>
+                    <small>Comments will appear hear once people comment on your blog posts</small>
+                </p>
+            </div>
+        </div>
+    </div><!-- /#page-wrapper -->
+</div><!-- /#wrapper -->
+
+<script type="text/javascript" src="/setupshop/sell/js/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="/setupshop/sell/js/bootstrap.js"></script>
+<script type="text/javascript" src="/setupshop/sell/js/bootstrap-select.min.js"></script>
+
+<script type="text/javascript" src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+<script type="text/javascript" src="//tinymce.cachefly.net/4.0/jquery.tinymce.min.js"></script>
+
+<!-- Page Specific Plugins -->
+<script type="text/javascript" src="/setupshop/sell/js/plugins/morris/raphael-2.1.0.min.js"></script>
+<script type="text/javascript" src="/setupshop/sell/js/plugins/morris/morris.js"></script>
+<script type="text/javascript" src="/setupshop/sell/js/plugins/dataTables/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/setupshop/sell/js/plugins/dataTables/dataTables.bootstrap.js"></script>
+
+
+<!-- KnockoutJS and custom bindings -->
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.0.0/knockout-min.js"></script>
+<script type="text/javascript" src="/setupshop/sell/js/wysiwyg.min.js"></script>
+<script type="text/javascript" src="/setupshop/sell/js/ko-morris.js"></script>
+
+<!-- ui widget initializations -->
+<script type="text/javascript" src="/setupshop/sell/js/tinymce.config.js"></script>
+<script type="text/javascript" src="/setupshop/sell/js/ui-init.js"></script>
+
+<!-- main app -->
+<script src="/setupshop/sell/viewmodel.js"></script>
+<script src="/setupshop/sell/productcatalog.js"></script>
+<script src="/setupshop/sell/blogapp.js"></script>
+<script src="/setupshop/sell/sus_sell.js"></script>
+
+
+

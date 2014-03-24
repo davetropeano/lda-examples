@@ -1,0 +1,24 @@
+<div id="store-header">
+    <div class="navbar-header pull-left">
+        <!-- ko with: store -->
+        <a class="navbar-brand" href="/" data-bind="text: dc_title"></a>
+        <!-- /ko -->
+    </div>
+
+    <div class="nav navbar-header pull-right">
+        <div class="nav navbar-nav dropdown">
+            <a class="navbar-text pull-right dropdown-toggle" href='#' data-toggle="dropdown">
+                <span data-bind="text: displayName()"></span><b class="caret big-caret"></b>
+            </a>
+            <ul class="dropdown-menu" role="menu" data-bind="if: !loggedIn()">
+                <li><a data-bind="click: login">Log in</a></li>
+            </ul>
+            <ul class="dropdown-menu" role="menu" data-bind="if: loggedIn()">
+                <li><a data-bind="click: logout">Log out</a></li>
+                <li><a data-bind="attr: { href: jwt.acc }">My Account</a></li>
+                <li><a data-bind="attr: { href: store.sus_backOffice.toString() }">Back Office</a></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
