@@ -11,6 +11,7 @@
 <script>
 function appendItem(item, location) {
     document.getElementById("todoItems").innerHTML += "<li><a href=\"" + location + "\">" + item + "</a></li>"
+    document.getElementById("item").value = "";
 }
 
 function displayItems() {
