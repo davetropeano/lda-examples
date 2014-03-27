@@ -1,7 +1,5 @@
-<form name="addItemForm">
-  <input type="text" id="item" name="item" placeholder="What do you need to do?" style="width: 200px;">
-  <input type="button" value="Add Todo Item" onClick="addItem();">
-</form>
+<input type="text" id="item" name="item" placeholder="What do you need to do?" style="width: 200px;">
+<input type="button" value="Add Todo Item" onClick="addItem();">
 
 <hr>
 
@@ -22,9 +20,12 @@ function displayItems() {
 }
 
 function addItem() {
+    var title = document.getElementById("item").value.trim();
+    if (title == '') return;
+
     var item = {
         "_subject": "",
-        "dc_title": document.getElementById("item").value,
+        "dc_title": title,
         "rdf_type": "http://example.org/todo#Item"
     };
 
@@ -36,6 +37,15 @@ function addItem() {
     else
         console.log(response);
 }
+
+// allow enter key to be pressed and act as submit
+document.getElementById('item').onkeydown = function(e) {
+    e = e || window.event;
+    if (e.keyCode == 13) {
+        addItem();
+    }
+};
+
 
 displayItems();
 </script>
