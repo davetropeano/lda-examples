@@ -9,7 +9,6 @@
 <script>
 function appendItem(item, location) {
     document.getElementById("todoItems").innerHTML += "<li><a href=\"" + location + "\">" + item + "</a></li>"
-    document.getElementById("item").value = "";
 }
 
 function displayItems() {
@@ -33,6 +32,7 @@ function addItem() {
     if (response.status == 201) {
         var location = response.getResponseHeader("location");
         appendItem(item.dc_title, location);
+        document.getElementById("item").value = "";
     }
     else
         console.log(response);
