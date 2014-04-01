@@ -45,6 +45,7 @@ Setupshop Sample
 ----------------
 
 This example demonstrates a multi-tenant hoster managing a hosted site called 'CloudSupplements' - an online store of vitamins and health products.
+Setupshop can be run in different configurations, but here we document what you need to do to run it in a local development configuration.
 
 This application uses services provided by the **lda-siteserver** component of LDA. Before attempting to run this example, make sure the siteserver application is running by following the instructions [shown here](https://github.com/ld4apps/lda-siteserver). Make sure you've added the following line in your
 /etc/hosts (C:\Windows\System32\Drivers\etc\hosts on Windows) file:
