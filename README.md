@@ -39,7 +39,8 @@ python setup.py install
 You should see the message "todo initiated on host: localhost port: 3007".
 
 At this point, you can point your browser at http://localhost:3007/items where you should see a very
-simple UI that allows you to add and view items on a todo list.
+simple UI that allows you to add and view items on a todo list. 
+For more details, refer to [Developing LDA Applications](http://ld4apps.github.io/developing-lda-applications/index.html).
 
 Setupshop Sample
 ----------------
