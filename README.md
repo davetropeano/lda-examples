@@ -7,8 +7,11 @@ This project contains several examples &amp; tutorials for Linked Data for Appli
 Note: if you don't have python 2.7, you need to install it before proceeding.
 `
 
-Before attempting to run any of the examples, if you haven't already done so, 
-bring up a virtual machine with Nginx and MongoDB in it:
+If you are new to LDA, you should start by looking at the 'Todo Sample' and its 
+corresponding [tutorial](http://ld4apps.github.io/developing-lda-applications/index.html).
+
+LDA applications typically require both a MongoDB database server and an Nginx reverse proxy server to be running. 
+The easiest way to start such servers is using the provided Vagrantfile to bring up a virtual machine with Nginx and MongoDB in it:
 
 ```sh
 cd lda-examples
