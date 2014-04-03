@@ -1,11 +1,15 @@
+var gc = {} || window.gc;
+gc.url_entrypoint = 'http://localhost:3007/items';
+
 $(document).on('pagecreate', "#index", function() {
-    var url_entrypoint = 'http://localhost:3007/items';
-    route(url_entrypoint);
+    route(gc.url_entrypoint);
 });
 
 $('#detail-page').on('pageshow', function(event) {
     $('#item-detail').text(JSON.stringify(gc.data, null, 4));
 });
+
+$('#submit-button').on('click', postItem);
 
 // $(document).on('click', showItem);
 function showItem(elem) {
@@ -13,7 +17,28 @@ function showItem(elem) {
     // route(this.href);
 }
 
-var gc = {} || window.gc;
+function postItem() {
+    var newitem = $('#new-item').val();
+    var thedata = {
+        "": {"http://purl.org/dc/terms/title": newitem, "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://example.org/todo#Item"}
+        };
+    console.log(newitem);
+    $.ajax({
+      type: "POST",
+      url: gc.url_entrypoint,
+      headers: {'CE-Post-Reason': 'CE-Create'},
+      data: JSON.stringify(thedata),
+      success: handlePostSuccess,
+      contentType: 'application/rdf+json+ce'
+    });
+}
+
+function handlePostSuccess(response) {
+    var subject = response[gc.url_entrypoint]['http://www.w3.org/2000/01/rdf-schema#member'].value;
+    var title = response[subject]['http://purl.org/dc/terms/title'];
+    appendList({"dc_title": title, "subject": subject});
+    $('#todo-list').listview("refresh");
+}
 
 function loadList() {
     var items = gc.data.rdfs_member;

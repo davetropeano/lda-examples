@@ -17,9 +17,15 @@
     </div>
 
     <div role="main" class="ui-content">
-        <form>
-            <input id="filter-for-listview" data-type="search" placeholder="Type to search...">
-        </form>
+        <fieldset class="ui-grid-a">
+            <div class="ui-block-a">
+                <input id="new-item" placeholder="new todo item...">
+            </div>
+            <div class="ui-block-b">
+                <button data-role="button" data-inline="true" id="submit-button">Add New Item</button>
+            </div>
+        </fieldset>
+
         <ul id="todo-list" data-role="listview" data-inset="true" data-filter="true" data-input="#filter-for-listview">
         </ul>
     </div>
