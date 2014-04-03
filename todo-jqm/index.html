@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LDA Todo Mobile</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="/css/jquery.mobile-1.4.2.min.css" />
+    <script src="/vendor/jquery-1.9.1.min.js"></script>
+    <script src="/vendor/jquery.mobile-1.4.2.min.js"></script>
+</head>
+<body>
+
+<div data-role="page" id="index">
+    <div data-role="header">
+        <h1>LDA Todo Mobile</h1>
+    </div>
+
+    <div role="main" class="ui-content">
+        <form>
+            <input id="filter-for-listview" data-type="search" placeholder="Type to search...">
+        </form>
+        <ul id="todo-list" data-role="listview" data-inset="true" data-filter="true" data-input="#filter-for-listview">
+        </ul>
+    </div>
+
+    <div data-role="footer">
+        <h4><a href="http://davetropeano.github.io/lda">LDA</a></h4>
+    </div>
+</div>
+
+<div data-role="page" id="detail-page">
+    <div data-role="header">
+        <a href="/" data-role="button" data-icon="carat-l" data-iconpos="notext" data-iconshadow="false" class="ui-icon-alt ui-icon-nodisc">Back</a>
+        <h1>LDA Todo Mobile - Details</h1>
+    </div>
+
+    <div role="main" class="ui-content">
+        <pre id="item-detail"></pre>
+    </div>
+
+    <div data-role="footer">
+        <h4><a href="http://davetropeano.github.io/lda">LDA</a></h4>
+    </div>
+</div>
+
+<script type="text/javascript" src="todo.js"></script>
+</body>
+</html>
