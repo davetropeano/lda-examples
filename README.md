@@ -55,7 +55,7 @@ local development configuration.
 
 This application uses services provided by the [lda-siteserver](https://github.com/ld4apps/lda-siteserver) component of LDA.
 
-**Before attempting to run this example, the siteserver application, mongodb and nginx servers must also running.**
+**Before attempting to run this example, the siteserver application, mongodb and nginx servers must also be running.**
 Instructions for starting them can be found [here](https://github.com/ld4apps/lda-siteserver/blob/master/README.md).
 
 To run the Setupshop application proceed as follows:
