@@ -11,7 +11,9 @@ corresponding [tutorial](http://ld4apps.github.io/developing-lda-applications/in
 Todo Sample
 -----------
 
-This is an example of an LDA-based 'todo list' application. **This application requires a running mongodb database server.**
+This is an example of an LDA-based 'todo list' application.
+
+**This application requires a running mongodb database server.**
 See [Downloading the Software](http://ld4apps.github.io/downloading-the-software/index.html) for instructions.
 
 To run the Todo application proceed as follows:
@@ -52,7 +54,8 @@ and health products. Setupshop can be run in different configurations, but here 
 local development configuration.
 
 This application uses services provided by the [lda-siteserver](https://github.com/ld4apps/lda-siteserver) component of LDA.
-Before attempting to run this example, the siteserver application, mongodb and nginx servers must also running.
+
+**Before attempting to run this example, the siteserver application, mongodb and nginx servers must also running.**
 Instructions for starting them can be found [here](https://github.com/ld4apps/lda-siteserver/blob/master/README.md).
 
 To run the Setupshop application proceed as follows:
