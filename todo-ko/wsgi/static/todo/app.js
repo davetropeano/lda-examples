@@ -1,35 +1,3 @@
-/*
-
-
-function addItem() {
-    var title = document.getElementById("item").value.trim();
-    if (title == '') return;
-
-    var item = {
-        "_subject": "",
-        "dc_title": title,
-        "rdf_type": "http://example.org/todo#Item"
-    };
-
-    var response = ld_util.send_create("", item);
-    if (response.status == 201) {
-        var location = response.getResponseHeader("location");
-        appendItem(item.dc_title, location);
-        document.getElementById("item").value = "";
-    }
-    else
-        console.log(response);
-}
-
-// allow enter key to be pressed and act as submit
-document.getElementById('item').onkeydown = function(e) {
-    e = e || window.event;
-    if (e.keyCode == 13) {
-        addItem();
-    }
-};
-*/
-
 function ViewModel() {
     var self = this;
     self.items = ko.observableArray();
