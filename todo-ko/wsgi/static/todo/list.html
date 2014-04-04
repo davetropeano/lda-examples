@@ -1,0 +1,53 @@
+<!-- bootstrap -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="/todo/style.css">
+
+<input type="text" id="item" name="item" placeholder="What do you need to do?" style="width: 200px;">
+<input type="button" value="Add Todo Item" onClick="addItem();">
+
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/todo/items">ToDo Knockout</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container" id="todo-app">
+    <div class="starter-template">
+        <p class="lead">An LDA example application using KnockoutJS and Twitter Bootstrap.</p>
+    </div>
+
+    <hr>
+
+    <form class="form-inline" data-bind="submit: addItem">
+        <input type="text" class="form-control input-lg" placeholder="New to do..." data-bind='value: itemToAdd, valueUpdate: "afterkeydown" '>
+        <button type="button" class="btn btn-primary btn-lg" data-bind="click: addItem, enable: itemToAdd().length > 0">Add To Do</button>
+    </form>
+
+    <div style="padding-top: 20px;">
+        <div class="list-group" data-bind="foreach: items">
+            <a class="list-group-item" data-bind="text: title, attr: {href: url}"></a>
+        </div>
+    </div>
+
+    <hr>
+</div><!-- /.container -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/knockout/3.1.0/knockout-min.js"></script>
+<script type="text/javascript" src="/todo/app.js"></script>
+
