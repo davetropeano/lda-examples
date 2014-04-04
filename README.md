@@ -3,7 +3,7 @@ lda-examples
 
 This project contains several examples and tutorials for Linked Data for Applications (LDA).
 
-**Note: if you don't have python 2.7, you need to install it before proceeding.**
+`Note: if you don't have python 2.7, you need to install it before proceeding.`
 
 If you are new to LDA, you should start by looking at the 'Todo Sample' and its 
 corresponding [tutorial](http://ld4apps.github.io/developing-lda-applications/index.html).
@@ -11,13 +11,10 @@ corresponding [tutorial](http://ld4apps.github.io/developing-lda-applications/in
 Todo Sample
 -----------
 
-This is an example of an LDA-based 'todo list' application. 
+This is an example of an LDA-based 'todo list' application. **This application requires a running mongodb database server.**
+See [Downloading the Software](http://ld4apps.github.io/downloading-the-software/index.html) for instructions.
 
-**This application requires a running mongodb database server.**
-See [Downloading the Software](http://ld4apps.github.io/downloading-the-software/index.html)
-for more details.
-
-To run the application proceed as follows:
+To run the Todo application proceed as follows:
 
 1. Start a database server, if you haven't already done so:
 
@@ -55,30 +52,34 @@ and health products. Setupshop can be run in different configurations, but here 
 local development configuration.
 
 This application uses services provided by the [lda-siteserver](https://github.com/ld4apps/lda-siteserver) component of LDA.
-**Before attempting to run this example, make sure the siteserver application is running** by following the instructions 
-[shown here](https://github.com/ld4apps/lda-siteserver/blob/master/README.md).
+Before attempting to run this example, the siteserver application, mongodb and nginx servers must also running.
+Instructions for starting them can be found [here](https://github.com/ld4apps/lda-siteserver/blob/master/README.md).
 
-Once the siteserver application is running, proceed as follows:
+To run the Setupshop application proceed as follows:
 
-1. Make sure you have the following line in your /etc/hosts (C:\Windows\System32\Drivers\etc\hosts on Windows) file:
+1. If you haven't already done so, start the siteserver, mongodb and nginx servers:
+
+   Follow the [siteserver startup instructions](https://github.com/ld4apps/lda-siteserver/blob/master/README.md).  
+
+2. Make sure you have the following line in your /etc/hosts (C:\Windows\System32\Drivers\etc\hosts on Windows) file:
 
         127.0.0.1 cloudsupplements.localhost
 
-2. cd into the setupshop directory:
+3. cd into the setupshop directory:
 
         cd lda-examples/setupshop
 
-3. Get the python libraries you need (only needs to be run once):
+4. Get the python libraries you need (only needs to be run once):
 
         python setup.py install
 
-3. Run the setupshop server:
+5. Run the setupshop server:
 
         ./run.sh (or equivalent for your OS)
 
    You should see the message "test setupshop initiated on host: localhost port: 3006".
 
-4. Create the test data:
+6. Create the test data:
 
         cd test
         ./setupshop_test_data_create.sh
