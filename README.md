@@ -3,7 +3,7 @@ lda-examples
 
 This project contains several examples and tutorials for Linked Data for Applications (LDA).
 
-        Note: if you don't have python 2.7, you need to install it before proceeding.
+**Note: if you don't have python 2.7, you need to install it before proceeding.**
 
 If you are new to LDA, you should start by looking at the 'Todo Sample' and its 
 corresponding [tutorial](http://ld4apps.github.io/developing-lda-applications/index.html).
@@ -11,7 +11,13 @@ corresponding [tutorial](http://ld4apps.github.io/developing-lda-applications/in
 Todo Sample
 -----------
 
-This is an example of an LDA-based 'todo list' application. To run the application proceed as follows:
+This is an example of an LDA-based 'todo list' application. 
+
+**This application requires a running mongodb database server.**
+See [Downloading the Software](http://ld4apps.github.io/downloading-the-software/index.html)
+for more details.
+
+To run the application proceed as follows:
 
 1. Start a database server, if you haven't already done so:
 
@@ -23,9 +29,6 @@ This is an example of an LDA-based 'todo list' application. To run the applicati
         cd <mongodb-installation-directory>/bin
         mongod
         
-   See [Downloading the Software]([Downloading the Software](http://ld4apps.github.io/downloading-the-software/index.html))
-   for more information.
-
 2. cd into the todo directory:
 
         cd lda-examples/todo
@@ -52,9 +55,8 @@ and health products. Setupshop can be run in different configurations, but here 
 local development configuration.
 
 This application uses services provided by the [lda-siteserver](https://github.com/ld4apps/lda-siteserver) component of LDA.
-
-        Before attempting to run this example, make sure the siteserver application is running by following the instructions 
-        [shown here](https://github.com/ld4apps/lda-siteserver/blob/master/README.md).
+**Before attempting to run this example, make sure the siteserver application is running** by following the instructions 
+[shown here](https://github.com/ld4apps/lda-siteserver/blob/master/README.md).
 
 Once the siteserver application is running, proceed as follows:
 
