@@ -16,7 +16,6 @@ CONTENT_RDF_JSON_HEADER = {
     }
 
 #DATASERVER_HOST = 'cloudapps4.me'
-print sys.argv
 DATASERVER_HOST = sys.argv[1] if len(sys.argv) > 1 and sys.argv[1] else 'localhost:3001' 
 
 if 'DATASERVER_HOST' in os.environ:
