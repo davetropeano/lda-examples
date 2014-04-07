@@ -1,7 +1,7 @@
 #
 # Create setupshop sample data.
 #
-import os, requests, json
+import os, requests, json, sys
 from rdf_json import URI, RDF_JSON_Document, RDF_JSON_Encoder, rdf_json_decoder
 from cat_import import CSVImporter
 from base_constants import CE, RDF, DC, AC, AC_R, AC_C, AC_ALL, ADMIN_USER, ANY_USER
@@ -16,7 +16,8 @@ CONTENT_RDF_JSON_HEADER = {
     }
 
 #DATASERVER_HOST = 'cloudapps4.me'
-DATASERVER_HOST = 'localhost:3001'
+print sys.argv
+DATASERVER_HOST = sys.argv[1] if len(sys.argv) > 1 and sys.argv[1] else 'localhost:3001' 
 
 if 'DATASERVER_HOST' in os.environ:
     DATASERVER_HOST = os.environ['DATASERVER_HOST']
