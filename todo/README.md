@@ -1,7 +1,8 @@
 Todo Sample
 -----------
 
-This is an example of an LDA-based 'todo list' application.
+This is an example of an LDA-based 'todo list' application. If you are new to LDA, we recommend that you start by looking at
+this sample in conjunction with its corresponding tutorial [found here](http://ld4apps.github.io/developing-lda-applications/index.html).
 
 **This application requires a running mongodb database server.**
 See [Downloading the Software](http://ld4apps.github.io/downloading-the-software/index.html) for instructions.
