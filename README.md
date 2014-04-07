@@ -7,7 +7,6 @@ This project contains several examples and tutorials for Linked Data for Applica
 
 Each example is in a self-contained subdirectory with a README.md file containing instructions for setting up and running it:
 
-* [Todo Sample](https://github.com/ld4apps/lda-examples/blob/master/todo/README.md) (recommended starting point)
-(recommended new users start with this and its corresponding [tutorial](http://ld4apps.github.io/developing-lda-applications/index.html)).
+* [Todo Sample](https://github.com/ld4apps/lda-examples/blob/master/todo/README.md) (recommended starting point for new users)
 * [SetupShop](https://github.com/ld4apps/lda-examples/blob/master/setupshop/README.md)
 * More to come ...
