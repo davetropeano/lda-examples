@@ -3,7 +3,7 @@
 import example_logic_tier as base
 import rdf_json, utils, urllib, hashlib
 from rdf_json import URI
-from base_constants import RDF, BP, CE
+from base_constants import RDF, LDP, CE
 from sus_constants import SUS, BG
 from cat_import import CSVImporter
 from threading import Thread
@@ -60,21 +60,20 @@ class Domain_Logic(base.Domain_Logic):
 
     def complete_document_for_container_insertion(self, document, container):
         container_url = self.request_url()
-        bp_predicate = container.getValue(BP+'membershipPredicate', subject=container_url)
-        if bp_predicate == SUS+'categoryProducts': 
+        if container.getValue(LDP+'hasMemberRelation', subject=container_url) == SUS+'categoryProducts': 
             # the standard processing in the superclass will add the new ProductDescription to the category. we want to add the product itself instead
             if not document.getValue(RDF+'type'):
                 raise ValueError('must provide a type')
-            category_url = container.getValue(BP+'membershipObject', subject=container_url)
+            category_url = container.getValue(LDP+'membershipResource', subject=container_url)
             product_url = document.getValue(SUS+'describes')
-            document.add_triple('#product', bp_predicate, {'type':'uri', 'value':product_url})
-        elif bp_predicate == SUS+'hasProduct':
+            document.add_triple('#product', SUS+'categoryProducts', {'type':'uri', 'value':product_url})
+        elif container.getValue(LDP+'isMemberOfRelation', subject=container_url) == SUS+'hasProduct':
             # the standard processing in the superclass will add the new ProductDescription to the site. We want to add the product itself instead
             if not document.getValue(RDF+'type'):
                 raise ValueError('must provide a type')
-            store_url = container.getValue(BP+'membershipSubject', subject=container_url)
+            store_url = container.getValue(LDP+'membershipResource', subject=container_url)
             product_url = document.getValue(SUS+'describes')
-            document.add_triple(store_url, bp_predicate, {'type':'uri', 'value':product_url})
+            document.add_triple(store_url, SUS+'hasProduct', {'type':'uri', 'value':product_url})
         else:
             return super(Domain_Logic, self).complete_document_for_container_insertion(document, container)
             

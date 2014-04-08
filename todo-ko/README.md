@@ -94,7 +94,7 @@ The ViewModel acts as the data translation layer between the server and the View
 
 ```javascript
 function getItems() {
-    var items = APPLICATION_ENVIRON.initial_simple_jso.bp_members
+    var items = APPLICATION_ENVIRON.initial_simple_jso.ldp_contains
     for (var i in items) {
         appendItem(items[i].dc_title, items[i]._subject);
     }

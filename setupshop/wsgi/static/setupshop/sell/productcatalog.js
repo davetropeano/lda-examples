@@ -46,11 +46,11 @@
 
         ld_util.get(self.store.sus_categories, function(request){
             if (request.status==200) {
-                var categories = APPLICATION_ENVIRON.rdf_converter.make_simple_jso(request).bp_members;
+                var categories = APPLICATION_ENVIRON.rdf_converter.make_simple_jso(request).ldp_contains;
                 categories.forEach(function(element) {
                     ld_util.get(element.sus_categoryProducts, function(request) {
                         if (request.status == 200) {
-                            var products = APPLICATION_ENVIRON.rdf_converter.make_simple_jso(request).bp_members;
+                            var products = APPLICATION_ENVIRON.rdf_converter.make_simple_jso(request).ldp_contains;
                             products.forEach(function(element) {
                                 self.products.push(element);
                             });

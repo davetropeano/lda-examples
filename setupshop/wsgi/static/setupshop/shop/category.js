@@ -7,7 +7,7 @@ define(['knockout', 'ko_es5'], function(ko) {
         self.showView = function(category) {
             ld_util.get(category.sus_categoryProducts, function(request){
                 if (request.status==200) {
-                    self.products = APPLICATION_ENVIRON.rdf_converter.make_simple_jso(request).bp_members;
+                    self.products = APPLICATION_ENVIRON.rdf_converter.make_simple_jso(request).ldp_contains;
                     document.title = self.products[0].dc_title;
                 }
                 else {

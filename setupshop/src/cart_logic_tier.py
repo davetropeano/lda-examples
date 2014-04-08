@@ -3,7 +3,7 @@ import operation_primitives
 import example_logic_tier as base
 import utils
 import rdf_json
-from base_constants import RDF, BP, CE, AC
+from base_constants import RDF, CE, AC
 from sus_constants import SUS, BG
 #import logging
 #logging.basicConfig(level=logging.DEBUG)
