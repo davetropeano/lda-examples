@@ -3,7 +3,7 @@
 ## Introduction
 The todo-jqm sample builds a hybrid mobile application using the [jQueryMobile](http://jquerymobile.com) framework. There are a number of instructive differences between todo-jqm and the original [todo sample](http://github.com/ld4apps/lda-examples/todo):
 
-* CSS styling - todo-jqm makes extensive use of the jQueryMobile theme and augments that with a custom stylesheet.
+* CSS styling - todo-jqm uses the jQueryMobile "A" theme.
 * No LDA bootstraping - todo-jqm does not use an application.js file to bootstrap itself. Because a mobile application is a separate binary compile todo-jqm is built as a standalone web application that accesses a todo-server through REST.
 * No clientlib - for this application sample we chose to not use the clientlib. The LDA clientlib provides a default router and a set of convenience methods for converting to/from our version of JSON (rdf+json+ce). We thought it instructive to expose what a front end developer would have to do *without* clientlib if they wanted to build an application.
 
@@ -176,6 +176,7 @@ function handlePostSuccess(response) {
     appendList({"dc_title": title, "subject": subject});
     $('#todo-list').listview("refresh");
 }
+```
 
 The formatting of the post content for consumtion by the server and the handling of the response data format are both things the clientlib helps with alot.
 
