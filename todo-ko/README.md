@@ -1,6 +1,6 @@
 # Building an LDA Application Using KnockoutJS
 
-[KnockoutJS]() is a JavaScript library that helps you to create rich, responsive display and editor user interfaces with a clean underlying data model. Any time you have sections of UI that update dynamically (e.g., changing depending on the user’s actions or when an external data source changes), KO can help you implement it more simply and maintainably. [1](http://knockoutjs.com/documentation/introduction.html)
+[KnockoutJS](http://knockoutjs.com) is a JavaScript library that helps you to create rich, responsive display and editor user interfaces with a clean underlying data model. Any time you have sections of UI that update dynamically (e.g., changing depending on the user’s actions or when an external data source changes), KO can help you implement it more simply and maintainably. [1](http://knockoutjs.com/documentation/introduction.html)
 
 KnockoutJS ("KO") has four essential features that help with building LDA UIs:
 
