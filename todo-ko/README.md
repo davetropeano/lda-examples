@@ -13,7 +13,7 @@ We like KnockoutJS because it is relatively easy to learn, popular (enough) with
 
 So while Knockout is fourth in popularity behind Bootstrap, Ember, and Angular in our experience it's "just right" for building a responsive LDA user experience.
 
-## To Do-KO vs The Original To Do
+## todo-ko vs Original todo
 
 There are two main differences between the original To Do application() and the Knockout version:
 
@@ -24,7 +24,7 @@ For a small application neither of these are bad things. As applications get lar
 
 ## Learning More About KnockoutJS
 
-Knockout implements the "Model-View-ViewModel" (MVVM) variant of MVC. There are excellent tutorials and documentation to help you learn the basics of Knockout. See http://learn.knockoutjs.com for an interactive tutorial that will teach you all you need to know for our todo app.
+Knockout implements the "Model-View-ViewModel" ([MVVM](http://en.wikipedia.org/wiki/Model_View_ViewModel)) variant of MVC. There are excellent tutorials and documentation to help you learn the basics of Knockout. See http://learn.knockoutjs.com for an interactive tutorial that will teach you all you need to know for our todo app.
 
 ## The todo-ko Application
 
