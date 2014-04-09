@@ -66,7 +66,7 @@ def run():
             },
         '#permission_1' : {
             AC+'do' : AC_ALL,
-            AC+'to' : [ URI('/'), URI('/mt/cloudsupplements') ]
+            AC+'to' : [ URI('/'), URI('/mt/cloudsupplements'), URI('/mt/testsite') ]
             }
         }
     r = requests.post(hs_ac_app_url, headers=CONTENT_RDF_JSON_HEADER, data=json.dumps(body, cls=RDF_JSON_Encoder), verify=False)
@@ -99,7 +99,7 @@ def run():
             },
         '#permission_2' : {
             AC+'do' : AC_C,
-            AC+'to' : [ URI('/account'), URI('/mt/sites'), URI('/cart') ]
+            AC+'to' : [ URI('/account'), URI('/mt/sites') ]
             }
         }
     r = requests.post(hs_ac_app_url, headers=CONTENT_RDF_JSON_HEADER, data=json.dumps(body, cls=RDF_JSON_Encoder), verify=False)
@@ -108,6 +108,7 @@ def run():
         return
     print '######## POSTed resource: %s, status: %d' % (r.headers['location'], r.status_code)
 
+    body['#permission_2'][AC+'to'] = URI('/cart')
     r = requests.post(cs_ac_app_url, headers=CONTENT_RDF_JSON_HEADER, data=json.dumps(body, cls=RDF_JSON_Encoder), verify=False)
     if r.status_code != 201:
         print '######## FAILED TO CREATE access control! ' + r.text
