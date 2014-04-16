@@ -1,3 +1,3 @@
 #!/bin/sh
-export PYTHONPATH=.:../src:../../../lda-serverlib/logiclibrary
+set PYTHONPATH=.:../src:../../../lda-clientlib/python:%PYTHONPATH
 python delete_test_data.py

@@ -5,6 +5,7 @@ import utils
 import rdf_json
 from base_constants import RDF, CE, AC
 from sus_constants import SUS, BG
+from base_constants import URL_POLICY as url_policy
 #import logging
 #logging.basicConfig(level=logging.DEBUG)
 
@@ -16,7 +17,7 @@ class Domain_Logic(base.Domain_Logic):
     def get_document(self, primitive=False):
         if self.document_id.startswith("current"):
             #it must be '/cart/current<userUrlHash>' or '/cart/current<userUrlHash>/cartItems'
-            cart_subject = utils.construct_url(self.request_hostname, self.tenant, self.namespace, self.document_id) 
+            cart_subject = url_policy.construct_url(self.request_hostname, self.tenant, self.namespace, self.document_id) 
             cart = rdf_json.RDF_JSON_Document({ 
                     cart_subject:{ 
                                     RDF+"type": rdf_json.URI("http://setupshop.me/ns#Cart"),
@@ -36,5 +37,5 @@ class Domain_Logic(base.Domain_Logic):
     
     def default_resource_group(self):
         if self.namespace == 'cart':
-            return utils.construct_url(self.request_hostname, self.tenant, self.namespace)
+            return url_policy.construct_url(self.request_hostname, self.tenant, self.namespace)
         return super(Domain_Logic, self).default_resource_group()

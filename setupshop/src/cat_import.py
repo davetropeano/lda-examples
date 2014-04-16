@@ -1,8 +1,18 @@
-import csv, json, requests, rdf_json
+import csv, json, requests, rdf_json, jwt
 from rdf_json import URI
 from base_constants import RDF, DC, CE, ADMIN_USER
 from sus_constants import SUS
-from cryptography import encode_jwt
+
+##################################################
+# TODO Move the following to a reusable place. Temporarily copied from test_utils
+SHARED_SECRET = 'our little secret'
+encoded_signature = jwt.encode({'user': ADMIN_USER}, SHARED_SECRET, 'HS256')
+POST_HEADERS = {
+    'Content-type': 'application/rdf+json+ce', 
+    'Cookie': 'SSSESSIONID=%s' % encoded_signature, 
+    'ce-post-reason': 'ce-create' 
+    }
+##################################################
 
 class CSVImporter():
     def __init__(self, cat_categories_url, cat_products_url, id_prefix, user=ADMIN_USER):
@@ -11,7 +21,7 @@ class CSVImporter():
         self.id_prefix = id_prefix
         self.categories = {}
         self.products = {}
-        self.headers = { 'Content-type' : 'application/rdf+json+ce' , 'Cookie' : 'SSSESSIONID=%s' % encode_jwt({'user':user}) , 'ce-post-reason' : 'ce-create' }
+        self.headers = POST_HEADERS
 
     def import_products(self, csv_file_name):
         infile = open(csv_file_name)

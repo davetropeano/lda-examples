@@ -4,6 +4,7 @@ import example_logic_tier as base
 import rdf_json, utils, urllib, hashlib
 from rdf_json import URI
 from base_constants import RDF, LDP, CE
+from base_constants import URL_POLICY as url_policy
 from sus_constants import SUS, BG
 from cat_import import CSVImporter
 from threading import Thread
@@ -102,7 +103,7 @@ class Domain_Logic(base.Domain_Logic):
                     if document.getValue(RDF+'type') == URI(SUS+'BackOffice'):
                         store = document.getValue(SUS+'store')
                         cat_categories_post_url = str(document.getValue(SUS+'categories', None, store))
-                        cat_products_post_url = str(utils.construct_url(self.request_hostname, self.tenant, self.namespace, 'products'))
+                        cat_products_post_url = str(url_policy.construct_url(self.request_hostname, self.tenant, self.namespace, 'products'))
                         id_prefix = self.document_id + '-'
                         thread = Thread(target = threaded_import_products, args = (item, cat_categories_post_url, cat_products_post_url, id_prefix, self.user))
                         thread.start()

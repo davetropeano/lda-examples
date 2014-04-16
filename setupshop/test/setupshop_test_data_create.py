@@ -6,14 +6,7 @@ from rdf_json import URI, RDF_JSON_Document, RDF_JSON_Encoder, rdf_json_decoder
 from cat_import import CSVImporter
 from base_constants import CE, RDF, DC, AC, AC_R, AC_C, AC_ALL, ADMIN_USER, ANY_USER
 from sus_constants import SUS, BG
-from cryptography import encode_jwt
-
-encoded_jwt = encode_jwt({'user':ADMIN_USER})
-CONTENT_RDF_JSON_HEADER = {
-    'Content-type' : 'application/rdf+json+ce',
-    'Cookie' : 'SSSESSIONID=%s' % encoded_jwt,
-    'ce-post-reason' : 'ce-create'
-    }
+from test_utils import POST_HEADERS, DELETE_HEADERS
 
 #DATASERVER_HOST = 'cloudapps4.me'
 DATASERVER_HOST = sys.argv[1] if len(sys.argv) > 1 and sys.argv[1] else 'localhost:3001' 
@@ -45,11 +38,11 @@ file_path = os.path.dirname(os.path.abspath(__file__))
 csv_file_name = os.path.join(file_path, 'data/vitalmax.csv')
 
 def run():
-    requests.delete(hs_mt_app_url, headers=CONTENT_RDF_JSON_HEADER)
-    requests.delete(cs_cat_app_url, headers=CONTENT_RDF_JSON_HEADER)
-    requests.delete(hs_ac_app_url, headers=CONTENT_RDF_JSON_HEADER)
-    requests.delete(cs_ac_app_url, headers=CONTENT_RDF_JSON_HEADER)
-    requests.delete(cs_cart_url, headers=CONTENT_RDF_JSON_HEADER)
+    requests.delete(hs_mt_app_url, headers=DELETE_HEADERS)
+    requests.delete(cs_cat_app_url, headers=DELETE_HEADERS)
+    requests.delete(hs_ac_app_url, headers=DELETE_HEADERS)
+    requests.delete(cs_ac_app_url, headers=DELETE_HEADERS)
+    requests.delete(cs_cart_url, headers=DELETE_HEADERS)
 
     body = {
         '' : {
@@ -69,14 +62,14 @@ def run():
             AC+'to' : [ URI('/'), URI('/mt/cloudsupplements'), URI('/mt/testsite') ]
             }
         }
-    r = requests.post(hs_ac_app_url, headers=CONTENT_RDF_JSON_HEADER, data=json.dumps(body, cls=RDF_JSON_Encoder), verify=False)
+    r = requests.post(hs_ac_app_url, headers=POST_HEADERS, data=json.dumps(body, cls=RDF_JSON_Encoder), verify=False)
     if r.status_code != 201:
         print '######## FAILED TO CREATE user group! ' + r.text
         return
     print '######## POSTed resource: %s, status: %d' % (r.headers['location'], r.status_code)
 
     body['#permission_1'][AC+'to'] = URI('/')
-    r = requests.post(cs_ac_app_url, headers=CONTENT_RDF_JSON_HEADER, data=json.dumps(body, cls=RDF_JSON_Encoder), verify=False)
+    r = requests.post(cs_ac_app_url, headers=POST_HEADERS, data=json.dumps(body, cls=RDF_JSON_Encoder), verify=False)
     if r.status_code != 201:
         print '######## FAILED TO CREATE access control! ' + r.text
         return
@@ -102,14 +95,14 @@ def run():
             AC+'to' : [ URI('/account'), URI('/mt/sites') ]
             }
         }
-    r = requests.post(hs_ac_app_url, headers=CONTENT_RDF_JSON_HEADER, data=json.dumps(body, cls=RDF_JSON_Encoder), verify=False)
+    r = requests.post(hs_ac_app_url, headers=POST_HEADERS, data=json.dumps(body, cls=RDF_JSON_Encoder), verify=False)
     if r.status_code != 201:
         print '######## FAILED TO CREATE user group! ' + r.text
         return
     print '######## POSTed resource: %s, status: %d' % (r.headers['location'], r.status_code)
 
     body['#permission_2'][AC+'to'] = URI('/cart')
-    r = requests.post(cs_ac_app_url, headers=CONTENT_RDF_JSON_HEADER, data=json.dumps(body, cls=RDF_JSON_Encoder), verify=False)
+    r = requests.post(cs_ac_app_url, headers=POST_HEADERS, data=json.dumps(body, cls=RDF_JSON_Encoder), verify=False)
     if r.status_code != 201:
         print '######## FAILED TO CREATE access control! ' + r.text
         return
@@ -123,7 +116,7 @@ def run():
             CE+'improvement_type': URI(SUS+'OnlineStore')
             }
         }
-    r = requests.post(mt_capabilities_url, headers=CONTENT_RDF_JSON_HEADER, data=json.dumps(body, cls=RDF_JSON_Encoder), verify=False)
+    r = requests.post(mt_capabilities_url, headers=POST_HEADERS, data=json.dumps(body, cls=RDF_JSON_Encoder), verify=False)
     if r.status_code != 201:
         print '######## FAILED TO CREATE Shopping Service Provider! ' + r.text
         return
@@ -139,7 +132,7 @@ def run():
             CE+'improvement_type': URI(BG+'BlogService')
             }
         }
-    r = requests.post(mt_capabilities_url, headers=CONTENT_RDF_JSON_HEADER, data=json.dumps(body, cls=RDF_JSON_Encoder), verify=False)
+    r = requests.post(mt_capabilities_url, headers=POST_HEADERS, data=json.dumps(body, cls=RDF_JSON_Encoder), verify=False)
     if r.status_code != 201:
         print '######## FAILED TO CREATE Blogging service provider! ' + r.text
         return
@@ -154,7 +147,7 @@ def run():
             CE+'capability': URI(store_capability_url)
             }
         }
-    r = requests.post(cs_cat_app_url, headers=CONTENT_RDF_JSON_HEADER, data=json.dumps(body, cls=RDF_JSON_Encoder), verify=False)
+    r = requests.post(cs_cat_app_url, headers=POST_HEADERS, data=json.dumps(body, cls=RDF_JSON_Encoder), verify=False)
     if r.status_code != 201:
         print '######## FAILED TO CREATE Online Store! ' + r.text
         return
@@ -173,7 +166,7 @@ def run():
             BG+'content': 'Hello. This is the first blog post',
             }
         }
-    r = requests.post(cs_cat_app_url, headers=CONTENT_RDF_JSON_HEADER, data=json.dumps(body, cls=RDF_JSON_Encoder), verify=False)
+    r = requests.post(cs_cat_app_url, headers=POST_HEADERS, data=json.dumps(body, cls=RDF_JSON_Encoder), verify=False)
     if r.status_code != 201:
         print '######## FAILED TO CREATE BLOG POST! ' + r.text
         return
@@ -187,7 +180,7 @@ def run():
             BG+'blog_posts': [ URI(blogpost_url) ]
             }
         }
-    r = requests.post(cs_cat_app_url, headers=CONTENT_RDF_JSON_HEADER, data=json.dumps(body, cls=RDF_JSON_Encoder), verify=False)
+    r = requests.post(cs_cat_app_url, headers=POST_HEADERS, data=json.dumps(body, cls=RDF_JSON_Encoder), verify=False)
     if r.status_code != 201:
         print '######## FAILED TO CREATE BLOG! ' + r.text
         return
@@ -202,7 +195,7 @@ def run():
             CE+'capability': URI(blog_capability_url)
             }
         }
-    r = requests.post(cs_cat_app_url, headers=CONTENT_RDF_JSON_HEADER, data=json.dumps(body, cls=RDF_JSON_Encoder), verify=False)
+    r = requests.post(cs_cat_app_url, headers=POST_HEADERS, data=json.dumps(body, cls=RDF_JSON_Encoder), verify=False)
     if r.status_code != 201:
         print '######## FAILED TO CREATE BLOG SERVICE! ' + r.text
         return
@@ -219,7 +212,7 @@ def run():
             CE+'improvements' : [URI(store_url), URI(blogservice_url)]
             }
         }
-    r = requests.post(sites_post_url, headers=CONTENT_RDF_JSON_HEADER, data=json.dumps(body, cls = RDF_JSON_Encoder), verify=False)
+    r = requests.post(sites_post_url, headers=POST_HEADERS, data=json.dumps(body, cls = RDF_JSON_Encoder), verify=False)
     if r.status_code != 201:
         print '######## FAILED TO CREATE SITE! ' + r.text
         return
