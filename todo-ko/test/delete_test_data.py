@@ -1,15 +1,13 @@
 import requests
 from base_constants import ADMIN_USER
-from cryptography import encode_jwt
+from test_utils import DELETE_HEADERS
 
-encoded_jwt = encode_jwt({'user':ADMIN_USER})
-DELETE_HEADER = { 'Cookie' : 'SSSESSIONID=%s' % encoded_jwt }
 DATASERVER_HOSTNAME = 'localhost:3007'
 
 items_container_url = 'http://%s/items' % DATASERVER_HOSTNAME
 
 def run():
-    requests.delete(items_container_url, headers=DELETE_HEADER)
+    requests.delete(items_container_url, headers=DELETE_HEADERS)
 
 if __name__ == '__main__':
     run()

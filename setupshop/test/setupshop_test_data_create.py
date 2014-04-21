@@ -8,31 +8,35 @@ from base_constants import CE, RDF, DC, AC, AC_R, AC_C, AC_ALL, ADMIN_USER, ANY_
 from sus_constants import SUS, BG
 from test_utils import POST_HEADERS, DELETE_HEADERS
 
-#DATASERVER_HOST = 'cloudapps4.me'
-DATASERVER_HOST = sys.argv[1] if len(sys.argv) > 1 and sys.argv[1] else 'localhost:3001' 
+HS_TENANT = 'hostingsite'
+CS_TENANT = 'cloudsupplements'
 
-if 'DATASERVER_HOST' in os.environ:
-    DATASERVER_HOST = os.environ['DATASERVER_HOST']
-
-if DATASERVER_HOST.startswith('localhost'):
-    HOSTINGSITE_HOST = DATASERVER_HOST
+#DATASERVER_HOSTNAME = 'cloudapps4.me'
+DATASERVER_HOSTNAME = 'localhost:3001'
+if len(sys.argv) > 1:
+    DATASERVER_HOSTNAME = sys.argv[1]
+    
+if DATASERVER_HOSTNAME.startswith('localhost'):
+    HS_HOSTNAME = DATASERVER_HOSTNAME
 else:
-    HOSTINGSITE_HOST = 'hostingsite.' + DATASERVER_HOST
+    HS_HOSTNAME = HS_TENANT + '.' + DATASERVER_HOSTNAME
+    
+if len(sys.argv) > 2:
+    CS_HOSTNAME = sys.argv[2]
+else:
+    CS_HOSTNAME = CS_TENANT + '.' + DATASERVER_HOSTNAME
+    
+hs_ac_app_url = 'http://%s/ac' % HS_HOSTNAME
+hs_mt_app_url = 'http://%s/mt' % HS_HOSTNAME
+sites_post_url = 'http://%s/mt/sites' % HS_HOSTNAME
+mt_capabilities_url = 'http://%s/mt/capabilities' % HS_HOSTNAME
 
-CS_SITE_ID = 'cloudsupplements'
-CS_HOST = 'cloudsupplements.%s' % DATASERVER_HOST
-
-sites_post_url = 'http://%s/mt/sites' % HOSTINGSITE_HOST
-hs_mt_app_url = 'http://%s/mt' % HOSTINGSITE_HOST
-mt_capabilities_url = 'http://%s/mt/capabilities' % HOSTINGSITE_HOST
-
-hs_ac_app_url = 'http://%s/ac' % HOSTINGSITE_HOST
-cs_ac_app_url = 'http://%s/ac' % CS_HOST
-cs_cat_app_url = 'http://%s/cat' % CS_HOST
-cs_cat_products_url = 'http://%s/cat/products' % CS_HOST
-cs_cat_categories_url = 'http://%s/cat/categories' % CS_HOST
-cs_cat_stores_url = 'http://%s/cat/stores' % CS_HOST
-cs_cart_url = 'http://%s/cart' % CS_HOST
+cs_ac_app_url = 'http://%s/ac' % CS_HOSTNAME
+cs_cat_app_url = 'http://%s/cat' % CS_HOSTNAME
+cs_cat_products_url = 'http://%s/cat/products' % CS_HOSTNAME
+cs_cat_categories_url = 'http://%s/cat/categories' % CS_HOSTNAME
+cs_cat_stores_url = 'http://%s/cat/stores' % CS_HOSTNAME
+cs_cart_url = 'http://%s/cart' % CS_HOSTNAME
 
 file_path = os.path.dirname(os.path.abspath(__file__))
 csv_file_name = os.path.join(file_path, 'data/vitalmax.csv')
@@ -204,7 +208,7 @@ def run():
 
     body = {
         '' : {
-            CE+'site_id' : CS_SITE_ID,
+            CE+'site_id' : CS_TENANT,
             CE+'public' : True,
             RDF+'type': {'type': 'uri', 'value' : CE+'Site'},
             CE+'site_home' : URI(store_url),
