@@ -3,7 +3,7 @@ TD = 'http://example.org/todo#'
 
 var onload_function = function() {
     var type_to_theme_map = {}
-    type_to_theme_map[LDP+'Container'] = '/todo/list.html'
+    type_to_theme_map[LDP+'DirectContainer'] = '/todo/list.html'
     type_to_theme_map[TD+'Item'] = '/todo/item.html'
 
     var head  = document.getElementsByTagName('head')[0]
