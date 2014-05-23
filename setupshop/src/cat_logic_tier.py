@@ -28,7 +28,6 @@ class Domain_Logic(base.Domain_Logic):
             if self.user is None:
                 return (401, None, None)
             else:
-                url_template = self.document_url() + '{}'
                 membership_predicate = {
                     'products'   : SUS+'hasProduct',
                     'stores'     : SUS+'hasStore',
@@ -36,7 +35,7 @@ class Domain_Logic(base.Domain_Logic):
                     'blogs'      : BG+'hasBlog',
                     } [self.document_id]
                 membership_resource = self.document_url()
-                document = self.create_container(url_template, membership_resource, membership_predicate, MEMBER_IS_OBJECT) 
+                document = self.create_container(self.document_url(), membership_resource, membership_predicate, MEMBER_IS_OBJECT) 
                 status, document = self.complete_result_document(document)
                 return [status, [], document]
         else:
