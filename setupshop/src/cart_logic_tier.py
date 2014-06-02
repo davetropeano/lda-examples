@@ -1,5 +1,4 @@
 import urlparse
-import operation_primitives
 import example_logic_tier as base
 import utils
 import rdf_json
