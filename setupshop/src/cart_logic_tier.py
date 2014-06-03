@@ -1,10 +1,7 @@
-import urlparse
-import operation_primitives
 import example_logic_tier as base
-import utils
 import rdf_json
-from base_constants import RDF, CE, AC
-from sus_constants import SUS, BG
+from base_constants import RDF, CE
+from sus_constants import SUS
 from base_constants import URL_POLICY as url_policy
 #import logging
 #logging.basicConfig(level=logging.DEBUG)
@@ -29,7 +26,7 @@ class Domain_Logic(base.Domain_Logic):
         return super(Domain_Logic, self).get_document()
                     
     def complete_result_document(self, document):
-        types = document.getValues(RDF+'type')
+        types = document.get_values(RDF+'type')
         if rdf_json.URI(SUS+'Cart') in types:
             #it must be '/cart/current<userUrlHash>'
             self.add_owned_container(document, SUS+'cartItems', 'cartItems', SUS+'cart')            

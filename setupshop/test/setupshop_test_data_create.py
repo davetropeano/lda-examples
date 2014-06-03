@@ -159,8 +159,8 @@ def run():
 
     store_url = r.headers['location']
     store = RDF_JSON_Document(json.loads(r.text, object_hook=rdf_json_decoder), store_url)
-    cs_cat_categories_url = str(store.getValue(SUS+'categories'))
-    backoffice_url = str(store.getValue(SUS+'backOffice'))
+    cs_cat_categories_url = str(store.get_value(SUS+'categories'))
+    backoffice_url = str(store.get_value(SUS+'backOffice'))
     id_prefix = backoffice_url[backoffice_url.rfind('/')+1:] + '-'
 
     body = {
@@ -223,7 +223,7 @@ def run():
     print '######## POSTed resource: %s, status: %d' % (r.headers['location'], r.status_code)
     site_url = r.headers['location']
     site = RDF_JSON_Document(json.loads(r.text, object_hook=rdf_json_decoder), site_url)
-    site_service_url = str(site.getValue(CE+'services'))
+    site_service_url = str(site.get_value(CE+'services'))
 
     csv_importer = CSVImporter(cs_cat_categories_url, cs_cat_products_url, id_prefix)
     if csv_importer.import_products(csv_file_name):

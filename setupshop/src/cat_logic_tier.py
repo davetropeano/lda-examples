@@ -1,7 +1,7 @@
 # cat is short for 'catalog' (or 'catalogue'), not category. This is the application that stores products (and their categories)
 
 import example_logic_tier as base
-import rdf_json, utils, urllib, hashlib
+import rdf_json, hashlib
 from rdf_json import URI
 from base_constants import RDF, LDP, CE
 from base_constants import URL_POLICY as url_policy
@@ -44,7 +44,7 @@ class Domain_Logic(base.Domain_Logic):
     def complete_result_document(self, document):
         # in this section we add any calculated triples
         document_url = document.graph_url    
-        types = document.getValues(RDF+'type')
+        types = document.get_values(RDF+'type')
         if URI(SUS+'OnlineStore') in types:
             document.add_triples(document_url, CE+'user', URI(self.user)) 
             document.add_triples(self.user, SUS+'cart', URI('/cart/current' + hashlib.sha224(self.user).hexdigest()))
@@ -54,32 +54,32 @@ class Domain_Logic(base.Domain_Logic):
         if URI(SUS+'BackOffice') in types: # add the triples for the store itself
             #the stored representation of the back_office does not reference the store, but the reference and store triples are added here
             self.add_resource_triples(document, document_url, SUS+'backOffice', MEMBER_IS_SUBJECT) 
-            store_url = document.getSubject(SUS+"backOffice", None, document_url)
+            store_url = document.get_subject(SUS+"backOffice", document_url)
             document.add_triples(document_url, SUS+'store', store_url)
         return super(Domain_Logic, self).complete_result_document(document)
 
     def complete_document_for_container_insertion(self, document, container):
         container_url = self.request_url()
-        if container.getValue(LDP+'hasMemberRelation', subject=container_url) == SUS+'categoryProducts': 
+        if container.get_value(LDP+'hasMemberRelation', subject=container_url) == SUS+'categoryProducts': 
             # the standard processing in the superclass will add the new ProductDescription to the category. we want to add the product itself instead
-            if not document.getValue(RDF+'type'):
+            if not document.get_value(RDF+'type'):
                 raise ValueError('must provide a type')
-            category_url = container.getValue(LDP+'membershipResource', subject=container_url)
-            product_url = document.getValue(SUS+'describes')
+            category_url = container.get_value(LDP+'membershipResource', subject=container_url)
+            product_url = document.get_value(SUS+'describes')
             document.add_triple('#product', SUS+'categoryProducts', {'type':'uri', 'value':product_url})
-        elif container.getValue(LDP+'isMemberOfRelation', subject=container_url) == SUS+'hasProduct':
+        elif container.get_value(LDP+'isMemberOfRelation', subject=container_url) == SUS+'hasProduct':
             # the standard processing in the superclass will add the new ProductDescription to the site. We want to add the product itself instead
-            if not document.getValue(RDF+'type'):
+            if not document.get_value(RDF+'type'):
                 raise ValueError('must provide a type')
-            store_url = container.getValue(LDP+'membershipResource', subject=container_url)
-            product_url = document.getValue(SUS+'describes')
+            store_url = container.get_value(LDP+'membershipResource', subject=container_url)
+            product_url = document.get_value(SUS+'describes')
             document.add_triple(store_url, SUS+'hasProduct', {'type':'uri', 'value':product_url})
         else:
             return super(Domain_Logic, self).complete_document_for_container_insertion(document, container)
             
     def complete_document_for_storage_insertion(self, document):
         document_url = document.graph_url
-        types = document.getValues(RDF+'type', [], document_url)
+        types = document.get_values(RDF+'type', document_url)
         if URI(SUS+'OnlineStore') in types: # When we create an OnlineStore, we also create a front and back office for it
             back_office = rdf_json.RDF_JSON_Document({'': {RDF+'type' : URI(SUS+'BackOffice')}}, '')
             status, headers, result = self.create_document(back_office)
@@ -99,9 +99,9 @@ class Domain_Logic(base.Domain_Logic):
             if item.file and (item.headers['Content-type'] == 'application/vnd.ms-excel' or item.headers['Content-type'] == 'text/csv'):
                 status, headers, document = self.recursive_get_document()
                 if status == 200:
-                    if document.getValue(RDF+'type') == URI(SUS+'BackOffice'):
-                        store = document.getValue(SUS+'store')
-                        cat_categories_post_url = str(document.getValue(SUS+'categories', None, store))
+                    if document.get_value(RDF+'type') == URI(SUS+'BackOffice'):
+                        store = document.get_value(SUS+'store')
+                        cat_categories_post_url = str(document.get_value(SUS+'categories', store))
                         cat_products_post_url = str(url_policy.construct_url(self.request_hostname, self.tenant, self.namespace, 'products'))
                         id_prefix = self.document_id + '-'
                         thread = Thread(target = threaded_import_products, args = (item, cat_categories_post_url, cat_products_post_url, id_prefix, self.user))
