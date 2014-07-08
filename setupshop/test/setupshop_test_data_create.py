@@ -122,7 +122,7 @@ def run():
         }
     r = requests.post(mt_capabilities_url, headers=POST_HEADERS, data=json.dumps(body, cls=RDF_JSON_Encoder), verify=False)
     if r.status_code != 201:
-        print '######## FAILED TO CREATE Shopping Service Provider! ' + r.text
+        print '######## FAILED TO CREATE Shopping Service Provider at %s! %s' % (mt_capabilities_url, r.text)
         return
     print '######## POSTed resource: %s, status: %d' % (r.headers['location'], r.status_code)
     store_capability_url = r.headers['location']
