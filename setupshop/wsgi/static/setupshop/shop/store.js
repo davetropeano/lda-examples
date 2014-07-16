@@ -18,7 +18,9 @@ define(function(require) {
 
             ld_util.get(store.sus_categories, function(request){
                 if (request.status==200) {
-                    self.categories = APPLICATION_ENVIRON.rdf_converter.make_simple_jso(request).ldp_contains
+                    var ldp_contains = APPLICATION_ENVIRON.rdf_converter.make_simple_jso(request).ldp_contains;
+                    if (ldp_contains)
+                        self.categories = ldp_contains;
                     }
                 else {
                     console.log( request.status )

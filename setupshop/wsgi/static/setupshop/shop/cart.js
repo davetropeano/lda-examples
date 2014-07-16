@@ -113,11 +113,12 @@ define(['knockout', 'ko_es5', 'bindings'], function(ko) {
         self.loadItems = function(){
             ld_util.get(self.cartItemsUrl, function(cartItemsResponse){
                 var cartItems = APPLICATION_ENVIRON.rdf_converter.make_simple_jso(cartItemsResponse);
-                cartItems = cartItems.ldp_contains                   
-                for ( var i in cartItems) {
-                    cartItems[i] = new CartItemVM(self, cartItems[i]);
-                }
-                self.data().sus_items(cartItems);                
+                cartItems = cartItems.ldp_contains  
+                if (cartItems)
+                    for ( var i in cartItems) {
+                        cartItems[i] = new CartItemVM(self, cartItems[i]);
+                    }
+                    self.data().sus_items(cartItems);
             });  
         }
         
