@@ -5,6 +5,7 @@ import rdf_json, hashlib
 from rdf_json import URI
 from base_constants import RDF, LDP, CE
 from base_constants import URL_POLICY as url_policy
+import base_constants
 from sus_constants import SUS, BG
 from cat_import import CSVImporter
 from threading import Thread
@@ -16,7 +17,7 @@ MEMBER_IS_OBJECT                =   True
 MEMBER_IS_SUBJECT               =   False
 
 NAMESPACE_MAPPINGS = {SUS : 'sus'}
-NAMESPACE_MAPPINGS.update(base.NAMESPACE_MAPPINGS)
+NAMESPACE_MAPPINGS.update(base_constants.NAMESPACE_MAPPINGS)
 
 class Domain_Logic(base.Domain_Logic):
     def namespace_mappings(self):
