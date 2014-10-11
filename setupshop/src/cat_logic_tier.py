@@ -37,7 +37,7 @@ class Domain_Logic(base.Domain_Logic):
                     } [self.document_id]
                 membership_resource = self.document_url()
                 document = self.create_container(self.document_url(), membership_resource, membership_predicate, MEMBER_IS_OBJECT) 
-                status, document = self.complete_result_document(document)
+                status, document = self.complete_request_document(document)
                 return [status, [], document]
         else:
             return super(Domain_Logic, self).get_document()

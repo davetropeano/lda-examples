@@ -21,7 +21,7 @@ class Domain_Logic(base.Domain_Logic):
                                     CE+'user': rdf_json.URI(self.user)
                                     } 
             }, cart_subject)
-            self.complete_result_document(cart)                        
+            self.complete_request_document(cart)                        
             return 200, [], cart
         return super(Domain_Logic, self).get_document()
                     
