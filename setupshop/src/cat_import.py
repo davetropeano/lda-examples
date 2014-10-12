@@ -68,7 +68,7 @@ class ResourceDocument:
         
     def get_resource(self):
         if self.resource_url is None:
-            r = requests.post(self.post_url, headers=self.headers, data=json.dumps(self.document, cls=rdf_json.RDF_JSON_Encoder), verify=False)
+            r = requests.post(self.post_url if self.post_url.startswith('http') else 'http:'+self.post_url, headers=self.headers, data=json.dumps(self.document, cls=rdf_json.RDF_JSON_Encoder), verify=False)
             if r.status_code == 201:
                 print '######## POSTed resource: %s, status: %d' % (r.headers['location'], r.status_code)
                 self.resource_url = r.headers['location']
