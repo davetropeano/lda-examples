@@ -105,12 +105,12 @@ class Domain_Logic(base.Domain_Logic):
                         cat_categories_post_url = str(document.get_value(SUS+'categories', store))
                         cat_products_post_url = str(url_policy.construct_url(self.request_hostname, self.tenant, self.namespace, 'products'))
                         id_prefix = self.document_id + '-'
-                        thread = Thread(target = threaded_import_products, args = (item, cat_categories_post_url, cat_products_post_url, id_prefix, self.user))
+                        thread = Thread(target = threaded_import_products, args = (item, cat_categories_post_url, cat_products_post_url, id_prefix, self.user, self.request_hostname))
                         thread.start()
                         return (202, [], 'Product import started ...')
         return super(Domain_Logic, self).execute_action(body)
 
-def threaded_import_products(item, cat_categories_post_url, cat_products_post_url, id_prefix, user):
+def threaded_import_products(item, cat_categories_post_url, cat_products_post_url, id_prefix, user, request_hostname):
     csv_importer = CSVImporter(cat_categories_post_url, cat_products_post_url, id_prefix, user)
     csv_importer.import_csv_products(item.file)
     print "done import."

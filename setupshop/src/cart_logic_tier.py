@@ -16,10 +16,11 @@ class Domain_Logic(base.Domain_Logic):
             #it must be '/cart/current<userUrlHash>' or '/cart/current<userUrlHash>/cartItems'
             cart_subject = url_policy.construct_url(self.request_hostname, self.tenant, self.namespace, self.document_id) 
             cart = rdf_json.RDF_JSON_Document({ 
-                    cart_subject:{ 
-                                    RDF+"type": rdf_json.URI("http://setupshop.me/ns#Cart"),
-                                    CE+'user': rdf_json.URI(self.user)
-                                    } 
+                cart_subject:{ 
+                    RDF+"type": rdf_json.URI("http://setupshop.me/ns#Cart"),
+                    CE+'user': rdf_json.URI(self.user),
+                    CE+'owner': rdf_json.URI(self.user)                    
+                    } 
             }, cart_subject)
             self.complete_request_document(cart)                        
             return 200, [], cart

@@ -225,7 +225,7 @@ def run():
     site = RDF_JSON_Document(json.loads(r.text, object_hook=rdf_json_decoder), site_url)
     site_service_url = str(site.get_value(CE+'services'))
 
-    csv_importer = CSVImporter(cs_cat_categories_url, cs_cat_products_url, id_prefix)
+    csv_importer = CSVImporter(cs_cat_categories_url, cs_cat_products_url, id_prefix, ADMIN_USER, CS_HOSTNAME)
     if csv_importer.import_products(csv_file_name):
         print 'Done.'
     else:

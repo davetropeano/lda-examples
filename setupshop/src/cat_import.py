@@ -15,13 +15,14 @@ POST_HEADERS = {
 ##################################################
 
 class CSVImporter():
-    def __init__(self, cat_categories_url, cat_products_url, id_prefix, user=ADMIN_USER):
+    def __init__(self, cat_categories_url, cat_products_url, id_prefix, user, request_hostname):
         self.cat_categories_url = cat_categories_url
         self.cat_products_url = cat_products_url
         self.id_prefix = id_prefix
         self.categories = {}
         self.products = {}
         self.headers = POST_HEADERS
+        self.request_hostname = request_hostname
 
     def import_products(self, csv_file_name):
         infile = open(csv_file_name)
@@ -39,7 +40,7 @@ class CSVImporter():
                 continue
             category_key = row[key_map['Category']]
             if category_key not in self.categories:
-                category_document = CategoryDocument(key_map, row, self.cat_categories_url, self.id_prefix, self.headers)
+                category_document = CategoryDocument(key_map, row, self.cat_categories_url, self.id_prefix, self.headers, self.request_hostname)
                 self.categories[category_key] = category_document
             else:
                 category_document = self.categories[category_key]
@@ -48,27 +49,27 @@ class CSVImporter():
                 return False
             product_key = row[key_map['Title']]
             if product_key not in self.products:
-                product_document = ProductDocument(key_map, row, category_url, self.cat_products_url, self.id_prefix, self.headers)
+                product_document = ProductDocument(key_map, row, category_url, self.cat_products_url, self.id_prefix, self.headers, self.request_hostname)
                 self.products[product_key] = product_document
             else:
                 product_document = self.products[product_key]
             product_document.add_variant(row)
         for product in self.products.values():
-            #print json.dumps(product.document, indent=4)
             if product.get_resource() is None:
                 return False
         return True # Success!
 
 class ResourceDocument:
-    def __init__(self, key_map, post_url, headers):
+    def __init__(self, key_map, post_url, headers, request_hostname):
         self.key_map = key_map
         self.post_url = post_url
         self.resource_url = None
         self.headers = headers
+        self.request_hostname = request_hostname
         
     def get_resource(self):
         if self.resource_url is None:
-            r = requests.post(self.post_url if self.post_url.startswith('http') else 'http:'+self.post_url, headers=self.headers, data=json.dumps(self.document, cls=rdf_json.RDF_JSON_Encoder), verify=False)
+            r = requests.post(self.post_url if self.post_url.startswith('http') else 'http:'+self.post_url if self.post_url.startswith('//') else 'http://%s%s'%(self.request_hostname, self.post_url), headers=self.headers, data=json.dumps(self.document, cls=rdf_json.RDF_JSON_Encoder), verify=False)
             if r.status_code == 201:
                 print '######## POSTed resource: %s, status: %d' % (r.headers['location'], r.status_code)
                 self.resource_url = r.headers['location']
@@ -80,8 +81,8 @@ class ResourceDocument:
         return self.resource_url
 
 class CategoryDocument(ResourceDocument):
-    def __init__(self, key_map, row, post_url, id_prefix, headers):
-        ResourceDocument.__init__(self, key_map, post_url, headers)
+    def __init__(self, key_map, row, post_url, id_prefix, headers, request_hostname):
+        ResourceDocument.__init__(self, key_map, post_url, headers, request_hostname)
         self.document = self.make_category(row, id_prefix)
         
     def make_category(self, row, id_prefix):
@@ -97,8 +98,8 @@ class CategoryDocument(ResourceDocument):
         return category
 
 class ProductDocument(ResourceDocument):
-    def __init__(self, key_map, row, category_url, post_url, id_prefix, headers):
-        ResourceDocument.__init__(self, key_map, post_url, headers)
+    def __init__(self, key_map, row, category_url, post_url, id_prefix, headers, request_hostname):
+        ResourceDocument.__init__(self, key_map, post_url, headers, request_hostname)
         self.document = self.make_product(row, category_url, id_prefix)
         self.variant_count = 1
         self.image_count = 1
