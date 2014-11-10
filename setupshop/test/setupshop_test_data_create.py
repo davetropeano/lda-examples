@@ -16,10 +16,7 @@ DATASERVER_HOSTNAME = 'localhost:3001'
 if len(sys.argv) > 1:
     DATASERVER_HOSTNAME = sys.argv[1]
     
-if DATASERVER_HOSTNAME.startswith('localhost'):
-    HS_HOSTNAME = DATASERVER_HOSTNAME
-else:
-    HS_HOSTNAME = HS_TENANT + '.' + DATASERVER_HOSTNAME
+HS_HOSTNAME = HS_TENANT + '.' + DATASERVER_HOSTNAME
     
 if len(sys.argv) > 2:
     CS_HOSTNAME = sys.argv[2]
@@ -72,7 +69,7 @@ def run():
         return
     print '######## POSTed resource: %s, status: %d' % (r.headers['location'], r.status_code)
 
-    body['#permission_1'][AC+'to'] = URI('/')
+    body['#permission_1'][AC+'to'] = [ URI('/') ]
     r = requests.post(cs_ac_app_url, headers=POST_HEADERS, data=json.dumps(body, cls=RDF_JSON_Encoder), verify=False)
     if r.status_code != 201:
         print '######## FAILED TO CREATE access control! ' + r.text
@@ -105,7 +102,7 @@ def run():
         return
     print '######## POSTed resource: %s, status: %d' % (r.headers['location'], r.status_code)
 
-    body['#permission_2'][AC+'to'] = URI('/cart')
+    body['#permission_2'][AC+'to'] = [ URI('/cart') ]
     r = requests.post(cs_ac_app_url, headers=POST_HEADERS, data=json.dumps(body, cls=RDF_JSON_Encoder), verify=False)
     if r.status_code != 201:
         print '######## FAILED TO CREATE access control! ' + r.text
