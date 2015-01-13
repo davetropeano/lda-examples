@@ -30,8 +30,6 @@ cs_cart_url = 'http://%s/cart' % CS_HOSTNAME
 
 
 def test_basic_crud():
-    # create a usergroup that gives the admin user full permissions to the root ('/') resource group
-    #   this is needed because the /mt/sites uses the '/' resource group to check permissions
     post_body = {
         '' : {
             RDF+'type': URI(SUS+'Category'),

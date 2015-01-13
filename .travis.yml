@@ -24,7 +24,7 @@ install:
     # install dependencies (currently just doing siteservers seem to work but in the future may need to do it for all repos)
     - "cd lda-siteserver"
     - "python setup.py install"
-    - "sudo apt-get install -y --fix-missing nginx"
+    - "sudo apt-get install -y nginx"
     - "cd ../lda-examples"
 
 # get ready to run tests
@@ -34,29 +34,30 @@ before_script:
     - "sudo service nginx restart"
     # start setupshop server and direct output to log file
     - "cd setupshop"
-    - "nohup sh run.sh > setupshop_server_test.log &"
+    - "nohup sh run.sh > ~/setupshop_server_test.log &"
     # start siteserver and direct output to log file
-    - "cd ../../lda-siteserver/test"
-    - "nohup sh run.sh > site_server_test.log &"
+    - "cd ../../lda-siteserver"
+    - "nohup sh run.sh > ~/site_server_test.log &"
     # wait for servers to come up
     - "sleep 10"
-    # create test data for siteserver
-    - "cd test"
-    - "sh test_data_create.sh"
-    # create test data for setupshop
-    - "cd ../../lda-examples/setupshop/test"
-    - "sh setupshop_test_data_create.sh"
-    # change to execution test directory
-    - "cd test_exec"
 
+# create test data for siteserver
+# create test data for setupshop
 # execute tests
-script: "py.test"
+script: "
+    cd test;
+    sh test_data_create.sh;
+    cd ../../lda-examples/setupshop/test;
+    sh setupshop_test_data_create.sh;
+    cd test_exec;
+    py.test
+"
 
 # do any neccessary cleanup and output any additional information that might be useful
 after_script:
     # output siteserver log
-    - "cd ../.."
-    - "cat site_server_test.log"
+    #- "cd ../.."
+    - "cat ~/site_server_test.log"
     # output setupshot log
-    - "cd ../../lda-examples"
-    - "cat setupshop_server_test.log"
+    #- "cd ../../lda-examples"
+    - "cat ~/setupshop_server_test.log"
