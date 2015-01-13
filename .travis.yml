@@ -1,0 +1,62 @@
+
+# Documentation here: http://docs.travis-ci.com/user/build-configuration/
+language: python
+python:
+  - "2.7"
+
+services: mongodb
+
+before_install:
+    - sudo apt-get update
+
+addons:
+  hosts:
+    - hostingsite.localhost
+    - cloudsupplements.localhost
+
+# install dependencies/requirements
+install:
+    # clone other required repos
+    - "cd .."
+    - "git clone https://github.com/ld4apps/lda-serverlib.git"
+    - "git clone https://github.com/ld4apps/lda-clientlib.git"
+    - "git clone https://github.com/ld4apps/lda-siteserver.git"
+    # install dependencies (currently just doing siteservers seem to work but in the future may need to do it for all repos)
+    - "cd lda-siteserver"
+    - "python setup.py install"
+    - "sudo apt-get install -y --fix-missing nginx"
+    - "cd ../lda-examples"
+
+# get ready to run tests
+before_script:
+    # Copy nginx config and start service
+    - "sudo cp -f dispatcher.conf /etc/nginx/conf.d/dispatcher.conf"
+    - "sudo service nginx restart"
+    # start setupshop server and direct output to log file
+    - "cd setupshop"
+    - "nohup sh run.sh > setupshop_server_test.log &"
+    # start siteserver and direct output to log file
+    - "cd ../../lda-siteserver/test"
+    - "nohup sh run.sh > site_server_test.log &"
+    # wait for servers to come up
+    - "sleep 10"
+    # create test data for siteserver
+    - "cd test"
+    - "sh test_data_create.sh"
+    # create test data for setupshop
+    - "cd ../../lda-examples/setupshop/test"
+    - "sh setupshop_test_data_create.sh"
+    # change to execution test directory
+    - "cd test_exec"
+
+# execute tests
+script: "py.test"
+
+# do any neccessary cleanup and output any additional information that might be useful
+after_script:
+    # output siteserver log
+    - "cd ../.."
+    - "cat site_server_test.log"
+    # output setupshot log
+    - "cd ../../lda-examples"
+    - "cat setupshop_server_test.log"
