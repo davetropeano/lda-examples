@@ -30,12 +30,12 @@ pytest_result=$?
 
 # output siteserver log
 echo ''
-echo '================== todo_server_test.log ======================================'
+echo '================== site_server_test.log ======================================'
 cat ~/site_server_test.log
 
 # output setupshot log
 echo ''
-echo '================== todo_server_test.log ======================================'
+echo '================== setupshop_server_test.log ======================================'
 cat ~/setupshop_server_test.log
 
 # return py.test result
