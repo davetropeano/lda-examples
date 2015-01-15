@@ -17,9 +17,9 @@ pytest_result=$?
 # TODO: kill servers
 
 # output server log
-echo ''
-echo '================== todo_server_test.log ======================================'
+echo 'travis_fold:start:todo_server_test.log'
 cat ~/todo_server_test.log
+echo 'travis_fold:end:todo_server_test.log'
 
 # return py.test result
 exit ${pytest_result}
