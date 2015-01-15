@@ -1,12 +1,6 @@
 #!/bin/bash
 
 #TODO: set location to lda-examples root via ~
-pwd
-cd ../../..
-
-# Copy nginx config and start service
-sudo cp -f dispatcher.conf /etc/nginx/conf.d/dispatcher.conf
-sudo service nginx restart
 
 # start setupshop server and direct output to log file
 cd setupshop
