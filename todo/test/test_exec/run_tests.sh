@@ -18,6 +18,7 @@ pytest_result=$?
 
 # output server log
 echo 'travis_fold:start:todo_server_test.log'
+echo 'todo_server_test output'
 cat ~/todo_server_test.log
 echo 'travis_fold:end:todo_server_test.log'
 
