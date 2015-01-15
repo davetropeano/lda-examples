@@ -1,9 +1,9 @@
 #!/bin/bash
 
-#TODO: set location to lda-examples root via ~
+#set location to lda-examples/setupshop
+cd ../..
 
 # start setupshop server and direct output to log file
-cd setupshop
 nohup sh run.sh > ~/setupshop_server_test.log &
 
 # start siteserver and direct output to log file
@@ -14,24 +14,28 @@ nohup sh run.sh > ~/site_server_test.log &
 sleep 10
 
 # create test data for setupshop
-cd test;
-sh test_data_create.sh;
+cd test
+sh test_data_create.sh
 
 # create test data for siteserver
-cd ../../lda-examples/setupshop/test;
-sh setupshop_test_data_create.sh;
+cd ../../lda-examples/setupshop/test
+sh setupshop_test_data_create.sh
 
 # execute tests
-cd test_exec;
-py.test
+cd test_exec
+pytest_result=py.test
 
 # TODO: kill servers
 
 # output siteserver log
-cd ../..
+echo ''
+echo '================== todo_server_test.log ======================================'
 cat ~/site_server_test.log
 
 # output setupshot log
-cd ../../lda-examples
+echo ''
+echo '================== todo_server_test.log ======================================'
 cat ~/setupshop_server_test.log
 
+# return py.test result
+exit ${pytest_result}
