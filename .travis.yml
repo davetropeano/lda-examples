@@ -6,6 +6,12 @@ python:
 
 services: mongodb
 
+env:
+  - TEST_DIR=setupshop
+  - TEST_DIR=todo
+  #- TEST_DIR=todo-jqm
+  #- TEST_DIR=todo-ko
+
 before_install:
     - sudo apt-get update
 
@@ -21,43 +27,45 @@ install:
     - "git clone https://github.com/ld4apps/lda-serverlib.git"
     - "git clone https://github.com/ld4apps/lda-clientlib.git"
     - "git clone https://github.com/ld4apps/lda-siteserver.git"
-    # install dependencies (currently just doing siteservers seem to work but in the future may need to do it for all repos)
+    # install dependencies (currently just doing siteserver's seems to work but in the future may need to do it for all repos)
     - "cd lda-siteserver"
     - "python setup.py install"
     - "sudo apt-get install -y nginx"
     - "cd ../lda-examples"
 
-# get ready to run tests
-before_script:
-    # Copy nginx config and start service
-    - "sudo cp -f dispatcher.conf /etc/nginx/conf.d/dispatcher.conf"
-    - "sudo service nginx restart"
-    # start setupshop server and direct output to log file
-    - "cd setupshop"
-    - "nohup sh run.sh > ~/setupshop_server_test.log &"
-    # start siteserver and direct output to log file
-    - "cd ../../lda-siteserver"
-    - "nohup sh run.sh > ~/site_server_test.log &"
-    # wait for servers to come up
-    - "sleep 10"
+## get ready to run tests
+#before_script:
+#    # Copy nginx config and start service
+#    - "sudo cp -f dispatcher.conf /etc/nginx/conf.d/dispatcher.conf"
+#    - "sudo service nginx restart"
+#    # start setupshop server and direct output to log file
+#    - "cd setupshop"
+#    - "nohup sh run.sh > ~/setupshop_server_test.log &"
+#    # start siteserver and direct output to log file
+#    - "cd ../../lda-siteserver"
+#    - "nohup sh run.sh > ~/site_server_test.log &"
+#    # wait for servers to come up
+#    - "sleep 10"
+#
+## create test data for siteserver
+## create test data for setupshop
+## execute tests
+#script: "
+#    cd test;
+#    sh test_data_create.sh;
+#    cd ../../lda-examples/setupshop/test;
+#    sh setupshop_test_data_create.sh;
+#    cd test_exec;
+#    py.test
+#"
 
-# create test data for siteserver
-# create test data for setupshop
-# execute tests
-script: "
-    cd test;
-    sh test_data_create.sh;
-    cd ../../lda-examples/setupshop/test;
-    sh setupshop_test_data_create.sh;
-    cd test_exec;
-    py.test
-"
+script: cd $TEST_DIR/test/test_exec && sh run.sh
 
-# do any neccessary cleanup and output any additional information that might be useful
-after_script:
-    # output siteserver log
-    #- "cd ../.."
-    - "cat ~/site_server_test.log"
-    # output setupshot log
-    #- "cd ../../lda-examples"
-    - "cat ~/setupshop_server_test.log"
+## do any neccessary cleanup and output any additional information that might be useful
+#after_script:
+#    # output siteserver log
+#    #- "cd ../.."
+#    - "cat ~/site_server_test.log"
+#    # output setupshot log
+#    #- "cd ../../lda-examples"
+#    - "cat ~/setupshop_server_test.log"
