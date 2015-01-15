@@ -23,7 +23,8 @@ sh setupshop_test_data_create.sh
 
 # execute tests
 cd test_exec
-pytest_result=py.test
+py.test
+pytest_result=$?
 
 # TODO: kill servers
 
@@ -38,4 +39,4 @@ echo '================== todo_server_test.log ==================================
 cat ~/setupshop_server_test.log
 
 # return py.test result
-exit $pytest_result
+exit ${pytest_result}
