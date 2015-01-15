@@ -43,9 +43,6 @@ def test_basic_crud():
     test_helper.container_crud_test(cs_cat_categories_url, post_body, patch_prop, patch_val)
 
 
-def test_fail():
-    assert False
-
 '''
 def test_user_create_site_store(account_user1, store_capability):
     """
