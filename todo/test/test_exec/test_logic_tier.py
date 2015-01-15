@@ -28,7 +28,10 @@ def test_basic_crud():
     patch_val = 'updated test todo'
     test_helper.container_crud_test(ITEMS_URL, post_body, patch_prop, patch_val)
 
+def test_fail():
+    assert False
 
+    
 # this is for working with tests while building them
 if __name__ == "__main__":
     test_basic_crud()
