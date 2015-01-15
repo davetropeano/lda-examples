@@ -59,7 +59,7 @@ install:
 #    py.test
 #"
 
-script: cd $TEST_DIR/test/test_exec && sh run.sh
+script: cd $TEST_DIR/test/test_exec && sh run_tests.sh
 
 ## do any neccessary cleanup and output any additional information that might be useful
 #after_script:
