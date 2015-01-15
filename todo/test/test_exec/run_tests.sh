@@ -21,4 +21,4 @@ echo '================== todo_server_test.log ==================================
 cat ~/todo_server_test.log
 
 # return py.test result
-exit ${pytest_result}
+exit $pytest_result
