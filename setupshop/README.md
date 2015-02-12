@@ -16,9 +16,10 @@ To run the Setupshop application proceed as follows:
 
    Follow the [siteserver startup instructions](https://github.com/ld4apps/lda-siteserver/blob/master/README.md).  
 
-2. Make sure you have the following line in your /etc/hosts (C:\Windows\System32\Drivers\etc\hosts on Windows) file:
+2. Make sure you have the following 2 lines in your /etc/hosts (C:\Windows\System32\Drivers\etc\hosts on Windows) file:
 
         127.0.0.1 cloudsupplements.localhost
+        127.0.0.1 hostingsite.localhost
 
 3. cd into the setupshop directory:
 
@@ -40,6 +41,8 @@ To run the Setupshop application proceed as follows:
         ./setupshop_test_data_create.sh
 
    If successful, you should see a number of POST messages on the console that look something like this:
+
+        ######## POSTed resource: http://hostingsite.localhost:3001/ac/13.1, status: 201
 
         ######## POSTed resource: http://localhost:3001/ac/13.1, status: 201
         ######## POSTed resource: http://cloudsupplements.localhost:3001/ac/13.2, status: 201
@@ -66,7 +69,7 @@ To run the Setupshop application proceed as follows:
         ######## POSTed resource: http://cloudsupplements.localhost:3001/cat/12.63, status: 201
         Done.
 
-At this point, you can point your browser at http://localhost:3001/ where you will initially see no existing sites. 
+At this point, you can point your browser at http://hostingsite.localhost:3001/ where you will initially see no existing sites.
 
 If you log in as **admin/admin**, the cloudsupplements site will appear. 
 You can explore the cloudsupplements site and you can link from there to the store at http://cloudsupplements.localhost:3001/. 

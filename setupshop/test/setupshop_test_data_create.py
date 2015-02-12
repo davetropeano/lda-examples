@@ -2,6 +2,14 @@
 # Create setupshop sample data.
 #
 import os, requests, json, sys
+
+sys.path.append('../../../lda-siteserver/src')
+sys.path.append('../../../lda-serverlib/logiclibrary')
+sys.path.append('../../../lda-serverlib/mongodbstorage')
+sys.path.append('../../../lda-clientlib/python')
+sys.path.append('../../../lda-clientlib/python/test')
+sys.path.append('../src')
+
 from rdf_json import URI, RDF_JSON_Document, RDF_JSON_Encoder, rdf_json_decoder
 from cat_import import CSVImporter
 from base_constants import CE, RDF, DC, AC, AC_R, AC_C, AC_ALL, ADMIN_USER, ANY_USER
