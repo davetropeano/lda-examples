@@ -132,7 +132,7 @@
         self.save = function(){
 
             var cart = self.data();
-            var modCount = cart.ce_modificationCount;
+            var revision = cart.ce_revision;
 
             //convert observable sus_items to simple array
             cart.sus_items = cart.sus_items();
@@ -145,7 +145,7 @@
             }
             var cartPatch = cart.make_patch();
 
-            ld_util.send_patch(self.cartUrl, modCount, cartPatch, function(request){
+            ld_util.send_patch(self.cartUrl, revision, cartPatch, function(request){
                 if(request.responseXML)
                     self.loadResponseData(request);
                 else

@@ -64,10 +64,10 @@ define(['knockout', 'ko_es5', 'bindings'], function(ko) {
                         sus_quantity: item.sus_quantity
                 }
                 itemPatch = APPLICATION_ENVIRON.rdf_converter.convert_to_rdf_jso(itemPatch);
-                ld_util.send_patch(item._subject, item.ce_modificationCount, itemPatch,function(patchResponse){
+                ld_util.send_patch(item._subject, item.ce_revision, itemPatch,function(patchResponse){
                     var responseJso = APPLICATION_ENVIRON.rdf_converter.make_simple_jso(patchResponse);
                     //item.request = patchResponse;
-                    item.ce_modificationCount = responseJso.ce_modificationCount;                        
+                    item.ce_revision = responseJso.ce_revision;                        
                 });
             }            
         }
