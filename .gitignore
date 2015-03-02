@@ -5,3 +5,4 @@
 .vagrant
 *.egg-info
 dist
+.idea/*
