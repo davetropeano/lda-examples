@@ -1,0 +1,53 @@
+<input type="text" id="item" name="item" placeholder="What do you need to do?" style="width: 200px;">
+<input type="button" value="Add Todo Item" onClick="addItem();">
+
+<hr>
+
+<div id="todoItems"></div>
+<hr>
+
+<script>
+function appendItem(item, location) {
+    document.getElementById("todoItems").innerHTML += "<li><a href=\"" + location + "\">" + item + "</a></li>"
+}
+
+function displayItems() {
+    var items = APPLICATION_ENVIRON.initial_simple_jso.ldp_contains
+    if (items)
+        for (var i in items) {
+            appendItem(items[i].dc_title, items[i]._subject);
+        }
+}
+
+function addItem() {
+    var title = document.getElementById("item").value.trim();
+    if (title == '') return;
+
+    var item = {
+        "_subject": "",
+        "dc_title": title,
+        "rdf_type": "http://example.org/todo#Item"
+    };
+
+    var headers = {"Content-type": "application/json"}
+    var response = ld_util.send_create("", item, null, headers);
+    if (response.status == 201) {
+        var location = response.getResponseHeader("location");
+        appendItem(item.dc_title, location);
+        document.getElementById("item").value = "";
+    }
+    else
+        console.log(response);
+}
+
+// allow enter key to be pressed and act as submit
+document.getElementById('item').onkeydown = function(e) {
+    e = e || window.event;
+    if (e.keyCode == 13) {
+        addItem();
+    }
+};
+
+
+displayItems();
+</script>
