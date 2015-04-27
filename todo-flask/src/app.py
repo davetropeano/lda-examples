@@ -1,4 +1,4 @@
-import lda
+from ld4apps import lda
 from flask import Flask, abort, request
 
 app = Flask(__name__, static_url_path='')
