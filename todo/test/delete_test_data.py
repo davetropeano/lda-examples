@@ -1,6 +1,6 @@
 import requests
-from base_constants import ADMIN_USER
-from test_utils import DELETE_HEADERS
+from ld4apps.base_constants import ADMIN_USER
+from ld4apps.test.test_utils import DELETE_HEADERS
 
 DATASERVER_HOSTNAME = 'localhost:3007'
 

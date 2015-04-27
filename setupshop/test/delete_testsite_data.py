@@ -1,6 +1,6 @@
 import base64, requests
 import json, os
-from test_utils import DELETE_HEADERS
+from ld4apps.test.test_utils import DELETE_HEADERS
 
 DATASERVER_HOSTNAME = 'localhost:3001'
 if 'SERVICE_HOSTNAME' in os.environ:
