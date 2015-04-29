@@ -2,7 +2,7 @@ Todo Sample
 -----------
 
 This is an example of an LDA-based 'todo list' application whose server is written using the Flask microframework (http://flask.pocoo.org/).
-See ldaserver.md for more details.
+See https://github.com/ld4apps/lda-examples/blob/ld4apps/todo-flask/ldaserver.md for more details.
 
 **This application requires a running mongodb database server.**
 See [Downloading the Software](http://ld4apps.github.io/downloading-the-software/index.html) for instructions.
