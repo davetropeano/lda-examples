@@ -1,8 +1,10 @@
-import example_logic_tier as base
-import rdf_json
-from base_constants import RDF, CE
+import ld4apps.example_logic_tier as base
+import ld4apps.rdf_json as rdf_json
+from ld4apps.base_constants import RDF, CE
+from ld4apps.base_constants import URL_POLICY as url_policy
+
 from sus_constants import SUS
-from base_constants import URL_POLICY as url_policy
+
 #import logging
 #logging.basicConfig(level=logging.DEBUG)
 

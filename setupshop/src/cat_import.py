@@ -1,6 +1,9 @@
-import csv, json, requests, rdf_json, jwt
-from rdf_json import URI
-from base_constants import RDF, DC, CE, ADMIN_USER
+import csv, json, requests, jwt
+
+import ld4apps.rdf_json as rdf_json
+from ld4apps.rdf_json import URI
+from ld4apps.base_constants import RDF, DC, CE, ADMIN_USER
+
 from sus_constants import SUS
 
 ##################################################

@@ -10,11 +10,12 @@ sys.path.append('../../../lda-clientlib/python')
 sys.path.append('../../../lda-clientlib/python/test')
 sys.path.append('../src')
 
-from rdf_json import URI, RDF_JSON_Document, RDF_JSON_Encoder, rdf_json_decoder
-from cat_import import CSVImporter
-from base_constants import CE, RDF, DC, AC, AC_R, AC_C, AC_ALL, ADMIN_USER, ANY_USER
+from ld4apps.rdf_json import URI, RDF_JSON_Document, RDF_JSON_Encoder, rdf_json_decoder
+from ld4apps.base_constants import CE, RDF, DC, AC, AC_R, AC_C, AC_ALL, ADMIN_USER, ANY_USER
+from ld4apps.test.test_utils import POST_HEADERS, DELETE_HEADERS
+
 from sus_constants import SUS, BG
-from test_utils import POST_HEADERS, DELETE_HEADERS
+from cat_import import CSVImporter
 
 HS_TENANT = 'hostingsite'
 CS_TENANT = 'cloudsupplements'

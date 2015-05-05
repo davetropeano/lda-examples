@@ -1,13 +1,16 @@
 # cat is short for 'catalog' (or 'catalogue'), not category. This is the application that stores products (and their categories)
 
-import example_logic_tier as base
-import rdf_json, hashlib
-from rdf_json import URI
-from base_constants import RDF, LDP, CE
-from base_constants import URL_POLICY as url_policy
-import base_constants
+import ld4apps.example_logic_tier as base
+import ld4apps.rdf_json as rdf_json
+from ld4apps.rdf_json import URI
+from ld4apps.base_constants import RDF, LDP, CE
+from ld4apps.base_constants import URL_POLICY as url_policy
+import ld4apps.base_constants as base_constants
+
 from sus_constants import SUS, BG
 from cat_import import CSVImporter
+
+import hashlib
 from threading import Thread
 
 #import logging
